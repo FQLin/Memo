@@ -1,0 +1,8 @@
+只需要安装 NLog.Config ，会自动安装上 NLog 和 NLog.Schema，并会自动生成 NLog.config 文件。
+
+
+参考：
+https://github.com/nlog/nlog/wiki/Tutorial
+https://www.cnblogs.com/zhangchengye/p/6297685.html
+File target
+https://github.com/NLog/NLog/wiki/File-target
