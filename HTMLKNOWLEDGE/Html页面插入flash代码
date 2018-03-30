@@ -1,0 +1,246 @@
+<object classid=“clsid:d27cdb6e-ae6d-11cf-96b8-444553540000″ codebase=“http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0″ width=“550″ height=“400″ id=“Untitled-1″ align=“center”>
+<param name=“allowScriptAccess” value=“sameDomain” />
+<param name=“movie” value=“mymovie.swf” />
+<param name=“quality” value=“high” />
+<param name=“bgcolor” value=“#ffffff” />
+<embed src=“mymovie.swf” quality=“high” bgcolor=“#ffffff” width=“550″ height=“400″ name=“mymovie” align=“center” allowScriptAccess=“sameDomain” type=“application/x-shockwave-flash” pluginspage=“http://www.macromedia.com/go/getflashplayer” />
+</object>
+上面这种方法使用 object 和 embed 标签来嵌入，细心的会发现，object 的很多参数和 embed 里面的很多属性是重复的，因为浏览器的兼容性不同，有的浏览器支持 object，有的支持 embed，这也是为什么要修改 Flash 的参数时两个地方都要改的原因。这种方法是 Macromedia 一直以来的官方方法，最大限度的保证了 Flash 的功能，没有兼容性问题。
+
+下面我来详细介绍一下参数的具体使用
+
+<object classid=“clsid:D27CDB6E-AE6D-11cf-96B8-444553540000″ codebase=“http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0″ width=“468″ height=“60″>
+<param name=movie value=“*.swf”>
+<param name=quality value=High>
+<param name=“_cx” value=“12383″>
+<param name=“_cy” value=“1588″>
+<param name=“FlashVars” value>
+<param name=“Src” ref value=“*.swf”>
+<param name=“WMode” value=“Window”>
+<param name=“Play” value=“-1″>
+<param name=“Loop” value=“-1″>
+<param name=“SAlign” value>
+<param name=“Menu” value=“-1″>
+<param name=“Base” value>
+<param name=“AllowScriptAccess” value=“always”>
+<param name=“Scale” value=“ShowAll”>
+<param name=“DeviceFont” value=“0″>
+<param name=“EmbedMovie” value=“0″>
+<param name=“BGColor” value>
+<param name=“SWRemote” value>
+<param name=“MovieData” value>
+<embed src=“你的flash地址” quality=high pluginspage=“http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash” type=“application/x-shockwave-flash” width=“468″ height=“60″>
+</embed></object>
+参数说明
+
+devicefont 属性/参数
+
+值: true | false
+
+模板变量：$DE
+
+说明:（可选）对于未选定“设备字体”选项的静态文本对象，指定是否仍使用设备字体进行绘制（如果操作系统提供了所需字体）。
+
+src 属性
+
+值: movieName.swf
+
+模板变量：$MO
+
+说明 : 指定要加载的 SWF 文件的名称。仅适用于 embed。
+
+movie 参数
+
+值: movieName.swf
+
+模板变量：$MO
+
+说明: 指定要加载的 SWF 文件的名称。仅适用于 object。
+
+classid 属性
+
+值: clsid:D27cdb6e-ae6d-11cf-96b8-444553540000
+
+说明: 标识浏览器的 ActiveX 控件。输入的值必须与上面的显示完全一致。仅适用于 object。
+
+width 属性
+
+值: n 或 n%
+
+模板变量：$WI
+
+说明:以像素值或浏览器窗口的百分比值来指定应用程序的宽度。
+
+height 属性
+
+值: n 或 n%
+
+模板变量：$HE
+
+说明: 以像素值或浏览器窗口的百分比值来指定应用程序的高度。
+
+注意：因为 Flash 应用程序是可缩放的，所以只要高宽比保持不变，不论以任何尺寸播放，它们的品质都不会降低。（例如，以下尺寸的高宽比都是 4:3：640 x 480 像素、320 x 240 像素和 240 x 180 像素。）
+
+codebase 属性
+
+值: active.macromedia.com/flash7/cabs/swflash.cab#version=7,0,0,0
+
+说明: 标识 Flash Player ActiveX 控件的位置，以便在尚未安装该控件时，浏览器可以自动下载它。输入的值必须与上面的显示完全一致。仅适用于 object。
+
+pluginspage 属性
+
+值: www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash
+
+说明: 标识 Flash Player 插件的位置，以便在尚未安装该插件时，用户可以下载它。输入的值必须与上面的显示完全一致。仅适用于 embed 。
+
+swliveconnect 属性
+
+值: true | false
+
+说明: （可选）指定第一次加载 Flash Player 时浏览器是否应启动 Java。如果忽略此属性，默认值为 false。如果在同一页面上同时使用 JavaScript 和 Flash，Java 必须处于运行状态，FSCommand() 函数才能起作用。但是，如果您运行 JavaScript 只是为了检测浏览器或用于其他与 fscommand() 动作无关的目的，则可以通过将 SWLIVECONNECT 设置为 false，从而防止 Java 启动。当没有将 JavaScript 和 Flash 一起使用时，也可以通过将 SWLIVECONNECT 属性明确设置为 true，强制 Java 启动。启动 Java 会显著增加启动 SWF 文件所需的时间，因此，只有在必要时才应将此标记设置为 true。仅适用于 embed。
+
+使用 fscommand() 动作可从独立的放映文件中启动 Java。
+
+play 属性/参数
+
+值: true | false
+
+模板变量：$PL
+
+说明:（可选）指定应用程序是否在浏览器中加载时就开始播放。如果您的 Flash 应用程序是交互式的，则可以让用户通过单击按钮或执行某些其他任务来开始播放。在这种情况下，将 play 属性设置为 false 可禁止应用程序自动开始播放。如果忽略此属性，默认值为 true。
+
+loop 属性/参数
+
+值: true | false
+
+模板变量：$LO
+
+说明: （可选）指定 Flash 内容在它到达最后一帧后是无限制重复播放还是停止。如果忽略此属性，默认值为 true。
+
+quality 属性/参数
+
+值: low | medium | high | autolow | autohigh | best
+
+模板变量：$QU
+
+说明: （可选）指定在应用程序回放期间使用的消除锯齿级别。因为消除锯齿需要更快的处理器先对 SWF 文件的每一帧进行平滑处理，然后再将它们呈现到观众屏幕上，所以需要根据要优化速度还是优化外观来选择一个值：
+
+“Low”使回放速度优先于外观，而且从不使用消除锯齿功能。
+
+“Autolow”优先考虑速度，但是也会尽可能改善外观。回放开始时，消除锯齿功能处于关闭状态。如果 Flash Player 检测到处理器可以处理消除锯齿功能，就会打开该功能。
+
+“Autohigh”在开始时是回放速度和外观两者并重，但在必要时会牺牲外观来保证回放速度。回放开始时，消除锯齿功能处于打开状态。如果实际帧 频降到指定帧频之下，就会关闭消除锯齿功能以提高回放速度。使用此设置可模拟 Flash 中的“消除锯齿”命令（“查看”>“预览模式”>“消除锯齿”）。
+
+“Medium”会应用一些消除锯齿功能，但并不会平滑位图。该设置生成的图像品质要高于“Low”设置生成的图像品质，但低于“High”设置生成的图像品质。
+
+“High”使外观优先于回放速度，它始终应用消除锯齿功能。如果 SWF 文件不包含动画，则会对位图进行平滑处理；如果 SWF 文件包含动画，则不会对位图进行平滑处理。
+
+“Best”提供最佳的显示品质，而不考虑回放速度。对所有输出都进行消除锯齿处理，并且对所有位图都进行平滑处理。
+
+如果忽略 quality 属性，其默认值为 high。
+
+bgcolor 属性/参数
+
+值: #RRGGBB（十六进制 RGB 值）
+
+模板变量：$BG
+
+说明: （可选）指定应用程序的背景色。使用此属性来覆盖在 Flash SWF 文件中指定的背景色设置。此属性不影响 HTML 页面的背景色。
+
+scale 属性/参数
+
+值: showall | noborder | exactfit
+
+模板变量：$SC
+
+说明: （可选）当 width 和 height 值是百分比时，定义应用程序如何放置在浏览器窗口中。
+
+“Showall”（默认值）使整个 Flash 内容显示在指定区域中，且不会发生扭曲，同时保持它的原始高宽比。边框可能会出现在应用程序的两侧。
+
+“Noborder”对 Flash 内容进行缩放以填充指定区域，不会发生扭曲，它会使应用程序保持原始高宽比，但有可能会进行一些裁剪。
+
+“Exactfit”使整个 Flash 内容显示在指定区域中，但不尝试保持原始高宽比。可能会发生扭曲。
+
+如果忽略此属性（而且 width 和 height 值是百分比），则它的默认值是 showall。
+
+align 属性
+
+值: Default | L | R | T | B
+
+模板变量：$HA
+
+说明: 指定 object、embed 和 img 标记的 align 值，并确定如何在浏览器窗口内放置 Flash SWF 文件。
+
+“默认”使应用程序在浏览器窗口内居中显示，如果浏览器窗口小于应用程序，则会裁剪边缘。
+
+L、R、T 和 B 让应用程序分别沿着浏览器窗口的左、右、上、下边缘对齐，并根据需要裁剪其余三边。
+
+salign 参数
+
+值: L | R | T | B | TL | TR | BL | BR
+
+模板变量：$SA
+
+说明: （可选）指定缩放的 Flash SWF 文件在由 width 和 height 设置定义的区域内的位置。有关这些条件的详细信息，请参阅scale 属性/参数。
+
+L、R、T 和 B 让应用程序分别沿着浏览器窗口的左、右、上、下边缘对齐，并根据需要裁剪其余三边。
+
+TL 和 TR 让应用程序分别与浏览器窗口的左上角和右上角对齐，并根据需要裁剪底边和剩余的右侧或左侧边缘。
+
+BL 和 BR 让应用程序分别与浏览器窗口的左下角和右下角对齐，并根据需要裁剪顶边和剩余的右侧或左侧边缘。
+
+如果忽略此属性，Flash 内容会在浏览器窗口中居中显示。
+
+base 属性
+
+值: 基本目录或 URL
+
+说明: （可选）指定用于解析 Flash SWF 文件中的所有相对路径语句的基本目录或 URL。如果 SWF 文件保存在与您的其他文件不同的目录下，这个属性是非常有用。
+
+menu 属性/参数
+
+值: true | false
+
+模板变量：$ME
+
+说明: （可选）指定当观众在浏览器中右击 (Windows) 或按住 Command 键单击 (Macintosh) 应用程序区域时将显示的菜单类型。
+
+“true” 显示完整的菜单，让用户使用各种选项增强或控制回放。
+
+“false” 显示的是一个只包含“关于 Macromedia Flash Player 6”选项和“设置”选项的菜单。
+
+如果忽略此属性，默认值为 true。
+
+wmode 属性/参数
+
+值 : Window | Opaque | Transparent
+
+模板变量：$WM
+
+说明: （可选）使您可以使用 Internet Explorer 4.0 中的透明 Flash 内容、绝对定位和分层显示的功能。此标记/属性仅在带有 Flash Player ActiveX 控件的 Windows 中有效。
+
+“Window”在 Web 页上用影片自己的矩形窗口来播放应用程序。“Window”表明 Flash 应用程序与 HTML 层没有任何交互，并且始终位于最顶层。
+
+“Opaque” 使应用程序隐藏页面上位于它后面的所有内容。
+
+“Transparent”使 HTML 页的背景可以透过应用程序的所有透明部分进行显示，这样可能会降低动画性能。
+
+“Opaque windowless”和“Transparent windowless” 都可与 HTML 层交互，并允许 SWF 文件上方的层遮蔽应用程序。这两种选项之间的差异在于“Transparent”允许透明，因此，如果 SWF 文件的某一部分是透明的，则 SWF 文件下方的 HTML 层可以透过该部分显示出来。
+
+如果忽略此属性，默认值为 Window。仅适用于 object。
+
+allowscriptaccess 属性/参数
+
+值: always | never | samedomain
+
+说明: 使用 allowscriptaccess 使 Flash 应用程序可与承载它的 HTML 页通信。此参数是必需的，因为 fscommand() 和 getURL() 操作可能导致 JavaScript 使用 HTML 页的权限，而该权限可能与 Flash 应用程序的权限不同。这与跨域安全性有着重要关系。
+
+always 允许随时执行脚本操作。
+
+never 禁止所有脚本执行操作。
+
+samedomain 只有在 Flash 应用程序来自与 HTML 页相同的域时才允许执行脚本操作。
+
+所有 HTML 发布模板使用的默认值均为 samedomain。
+
+http://www.3lian.com/edu/2013/05-24/71389.html
