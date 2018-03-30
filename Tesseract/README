@@ -1,0 +1,16 @@
+识别图片上的文字
+使用Tesseract
+
+下载中文语言包
+https://github.com/tesseract-ocr/tessdata
+在项目的根目录下创建 tessdata 文件夹，存放语言包
+
+不支持 gif 动图
+
+对图片表情来说 识别准确率低的可怜
+
+
+参考文档
+http://www.cnblogs.com/xiaoruilin/p/5164170.html
+官方文档：https://github.com/charlesw/tesseract
+Samples：https://github.com/charlesw/tesseract-samples
