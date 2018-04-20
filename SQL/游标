@@ -1,0 +1,15 @@
+--本 SQL 的作用是使用游标循环课程Id的结果集，并插入到分类关系表中
+
+declare @Id varchar(32)--定义变量，用于存储当前被遍历到的值
+--递归，首先需要递归的空间，定义一个游标指向这个空间
+declare mycursor cursor for select Id from tbl_Course --for 之后跟的是要遍历的结果集
+open mycursor --打开游标
+fetch next from mycursor into @Id --取出结果集中的下一条记录
+while(@@FETCH_STATUS=0)--判断下一行还有数据，要遍历所有数据，必须添加while循环，不然的话只遍历了第一条数据，其他的数据不会读取
+begin
+--doing something
+insert tbl_Course_Category_Map values(@Id,'4c6c4ade55f14941b0345f1c4a93ce35','1fa7990dab944cd28bf8da33409e70eb','2018-04-20 17:20:57.307',REPLACE(NEWID(),'-',''))
+fetch next from mycursor into @Id --开始下一个循环，并把下一行的数据读取出来，放入变量中
+end
+close mycursor --关闭游标
+deallocate mycursor --删除游标
