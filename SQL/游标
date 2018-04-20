@@ -13,3 +13,5 @@ fetch next from mycursor into @Id --开始下一个循环，并把下一行的�
 end
 close mycursor --关闭游标
 deallocate mycursor --删除游标
+
+参考：https://blog.csdn.net/c0411034/article/details/53443011
