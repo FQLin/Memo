@@ -5,7 +5,7 @@ Razor 页面上定义方法有以下两种方式：
 {
     <p>Welcome, @username.</p>
 }
-适用于处理 html 代码，和使用 Razor 代码展示 html
+适用于处理 html 代码，和使用 Razor 代码展示 html，返回类型一直是 HelperResult
 
 方式二
 @functions{
