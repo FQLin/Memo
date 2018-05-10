@@ -1,10 +1,9 @@
 ﻿# iptables 基础
 
-标签（空格分隔）： Linux
 
 ---
 
-###1.iptables 基本命令
+### 1.iptables 基本命令
 
 iptables 可以简单理解为 Linux 系统**内核级防火墙** netfilter 的用户态客户端。
 
@@ -46,7 +45,7 @@ sudo iptables -L -n
 ```c++
 sudo iptables -L -n -t nat > /home/ubuntu/iptables_nat
 ```
-###2.场景：禁止访问目的地址
+### 2.场景：禁止访问目的地址
 
 添加一条规则到 Filter 表
 在没有任何防火墙规则时，尝试 ping 百度的服务器，ping 是可以正常返回的。
@@ -86,7 +85,7 @@ ping: sendmsg: Operation not permitted
 ping: sendmsg: Operation not permitted
 ```
 
-###3.场景：导出、编辑、导入规则
+### 3.场景：导出、编辑、导入规则
 
 在进行一系列复杂的防火墙配置时，大多数时候不建议直接调用 iptables 做规则修改。 因为任何一条错误的配置或者一个 typo （输入错误）都有可能导致严重的网络问题。
 
@@ -128,7 +127,7 @@ iptables 还提供 -X 参数清除自定义链， -Z 参数重置计数器
 
 >除默认链之外由用户自建的链
 
-###4.iptables进阶场景：黑/白名单
+### 4.iptables进阶场景：黑/白名单
 
 某公司禁止特定的 PC 设备访问和工作无关的网站，而其他设备则不受限制。
 
@@ -179,7 +178,7 @@ sudo iptables -A BLACKLIST -d 220.181.111.188 -j DROP
 - 如果后续要增加新的禁止访问的目的地址，则只需向 BLACKLIST 链添加新规则。
 - 如果需要限制另一台 PC 通过本网关转发访问外网，则只需添加一条 OUTPUT 链的源 IP 匹配规则并指向 -j BLACKLIST。
 
-###5.进阶场景：端口映射
+### 5.进阶场景：端口映射
 
 分析： 通常来讲应该首先考虑程序本身能否配置监听多个端口，或者使用负载均衡器作为代理程序。 但在本次实验中我们将使用 iptables 监听 8080 端口并将网络数据包转发给本地80端口
 
