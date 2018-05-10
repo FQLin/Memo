@@ -14,7 +14,7 @@ iptables 语法
 我们来看看 iptables 命令的语法帮助信息，并将其保存到文本文件
 想要通过步骤检查，可以在终端输入：
 ```c++
-    sudo iptables -h > ~/iptables_help
+sudo iptables -h > ~/iptables_help
 ```
 查看 iptables 表的规则
 
