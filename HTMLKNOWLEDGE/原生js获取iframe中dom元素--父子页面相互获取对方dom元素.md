@@ -1,5 +1,6 @@
-1、父页面（demo.html），在父页面修改子页面div的背景色为灰色，原来为红色：
+### 1、父页面（demo.html），在父页面修改子页面div的背景色为灰色，原来为红色：
 
+```html
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -21,9 +22,11 @@
 <iframe src="demo-iframe.html" id="iframeId" height="150" width="150"></iframe>  
 </body>
 </html>
+```
 
-2、子页面（demo-iframe.html），在子页面修改父页面div的字体颜色为红色，原来为黑色：
+### 2、子页面（demo-iframe.html），在子页面修改父页面div的字体颜色为红色，原来为黑色：
 
+```html
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -42,3 +45,4 @@
 	<div id='objId' style='width:100px;height:100px;background-color:red;'>子页面</div>
 </body>
 </html>
+```
