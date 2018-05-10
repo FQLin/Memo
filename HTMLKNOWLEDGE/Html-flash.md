@@ -1,3 +1,4 @@
+```html
 <object classid=“clsid:d27cdb6e-ae6d-11cf-96b8-444553540000″ codebase=“http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0″ width=“550″ height=“400″ id=“Untitled-1″ align=“center”>
 <param name=“allowScriptAccess” value=“sameDomain” />
 <param name=“movie” value=“mymovie.swf” />
@@ -5,32 +6,36 @@
 <param name=“bgcolor” value=“#ffffff” />
 <embed src=“mymovie.swf” quality=“high” bgcolor=“#ffffff” width=“550″ height=“400″ name=“mymovie” align=“center” allowScriptAccess=“sameDomain” type=“application/x-shockwave-flash” pluginspage=“http://www.macromedia.com/go/getflashplayer” />
 </object>
-上面这种方法使用 object 和 embed 标签来嵌入，细心的会发现，object 的很多参数和 embed 里面的很多属性是重复的，因为浏览器的兼容性不同，有的浏览器支持 object，有的支持 embed，这也是为什么要修改 Flash 的参数时两个地方都要改的原因。这种方法是 Macromedia 一直以来的官方方法，最大限度的保证了 Flash 的功能，没有兼容性问题。
+```
+> 上面这种方法使用 object 和 embed 标签来嵌入，细心的会发现，object 的很多参数和 embed 里面的很多属性是重复的，因为浏览器的兼容性不同，有的浏览器支持 object，有的支持 embed，这也是为什么要修改 Flash 的参数时两个地方都要改的原因。这种方法是 Macromedia 一直以来的官方方法，最大限度的保证了 Flash 的功能，没有兼容性问题。
 
 下面我来详细介绍一下参数的具体使用
 
+```html
 <object classid=“clsid:D27CDB6E-AE6D-11cf-96B8-444553540000″ codebase=“http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0″ width=“468″ height=“60″>
 <param name=movie value=“*.swf”>
 <param name=quality value=High>
-<param name=“_cx” value=“12383″>
-<param name=“_cy” value=“1588″>
-<param name=“FlashVars” value>
-<param name=“Src” ref value=“*.swf”>
-<param name=“WMode” value=“Window”>
-<param name=“Play” value=“-1″>
-<param name=“Loop” value=“-1″>
-<param name=“SAlign” value>
-<param name=“Menu” value=“-1″>
-<param name=“Base” value>
-<param name=“AllowScriptAccess” value=“always”>
-<param name=“Scale” value=“ShowAll”>
-<param name=“DeviceFont” value=“0″>
-<param name=“EmbedMovie” value=“0″>
-<param name=“BGColor” value>
-<param name=“SWRemote” value>
-<param name=“MovieData” value>
+<param name="_cx" value=“12383″>
+<param name="_cy" value=“1588″>
+<param name="FlashVars" value>
+<param name="Src" ref value=“*.swf”>
+<param name="WMode" value=“Window”>
+<param name="Play" value=“-1″>
+<param name="Loop" value=“-1″>
+<param name="SAlign" value>
+<param name="Menu" value=“-1″>
+<param name="Base" value>
+<param name="AllowScriptAccess” value=“always”>
+<param name="Scale” value=“ShowAll”>
+<param name="DeviceFont” value=“0″>
+<param name="EmbedMovie” value=“0″>
+<param name="BGColor” value>
+<param name="SWRemote” value>
+<param name="MovieData" value>
 <embed src=“你的flash地址” quality=high pluginspage=“http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash” type=“application/x-shockwave-flash” width=“468″ height=“60″>
 </embed></object>
+```
+
 参数说明
 
 devicefont 属性/参数
