@@ -1,5 +1,4 @@
-引用自：
-https://github.com/ziyasal/Autofac.Extras.NLog
+引用自:[https://github.com/ziyasal/Autofac.Extras.NLog](https://github.com/ziyasal/Autofac.Extras.NLog)
 
 因为 Autofac.Extras.NLog 重新定义了ILogger接口，使用的不是 NLogger 提供的接口。
 要在 Data 层使用 Logger 的话需要安装 Autofac.Extras.NLog，而我只想安装一个 NLogger，所以在这个项目中重写 LoggerAdapter
