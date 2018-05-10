@@ -1,5 +1,5 @@
-DOM结构：
-
+**DOM结构：**
+```html
 <a href="javascript:;" class="a-upload">
     <input type="file" name="" id="">点击这里上传文件
 </a>
@@ -7,9 +7,9 @@ DOM结构：
 <a href="javascript:;" class="file">选择文件
     <input type="file" name="" id="">
 </a>
-
-CSS样式1：
-
+```
+**CSS样式1：**
+```css
 /*a  upload */
 .a-upload {
     padding: 4px 10px;
@@ -46,9 +46,11 @@ CSS样式1：
     border-color: #ccc;
     text-decoration: none
 }
+```
 
-样式2：
+**样式2：**
 
+```css
 .file {
     position: relative;
     display: inline-block;
@@ -75,7 +77,9 @@ CSS样式1：
     color: #004974;
     text-decoration: none;
 }
+```
 
+```javascript
 $(".a-upload").on("change","input[type='file']",function(){
     var filePath=$(this).val();
     if(filePath.indexOf("jpg")!=-1 || filePath.indexOf("png")!=-1){
@@ -89,3 +93,4 @@ $(".a-upload").on("change","input[type='file']",function(){
         return false 
     }
 })
+```
