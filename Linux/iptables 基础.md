@@ -207,3 +207,5 @@ sudo iptables -t nat -A OUTPUT -p tcp -d 127.0.0.1 --dport 8080 -j DNAT --to 127
 sudo iptables -t nat -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-ports 80
 ```
 通过使用 PREROUTING 链直接将访问 8080 端口的数据包转发到 80 端口
+
+[参考](https://cloud.tencent.com/developer/labs/lab/10297)
