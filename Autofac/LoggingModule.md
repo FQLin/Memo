@@ -1,3 +1,4 @@
+```C#
 public class LoggingModule : Autofac.Module
     {
         private static void InjectLoggerProperties(object instance)
@@ -34,3 +35,4 @@ public class LoggingModule : Autofac.Module
             registration.Activated += (sender, e) => InjectLoggerProperties(e.Instance);
         }
     }
+```
