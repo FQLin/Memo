@@ -1,3 +1,4 @@
+  ```C#
   List<Dictionary<string, object>> result = new List<Dictionary<string, object>>();
   foreach (DataRow dr in dt.Rows)
   {
@@ -10,5 +11,6 @@
   }
   
   JsonConvert.SerializeObject(result)
+  ```
   
-  使用NewtonSoft.Json进行序列化，当内容很多的时候 Jil 会出错
+  >使用NewtonSoft.Json进行序列化，当内容很多的时候 Jil 会出错
