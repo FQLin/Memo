@@ -13,16 +13,27 @@ Subversion 是一个版本控制系统，相对于的 RCS 、 CVS ，采用了�
 ```c++
 yum install -y subversion
 ```
+测试安装是否成功：
+```c++
+$ svnserve --version
+```
 ### 2.创建 SVN 版本库
-
-创建项目版本库
+创建svn数据目录 subversion 默认是把 /var/svn 作为数据根目录的，开机启动默认也是从这里
 ```c++
  mkdir -p /data/svn/myproject
+```
+创建项目版本库
+```c++
  svnadmin create /data/svn/myproject
+```
+删除项目版本库
+```c++
+ rm -rf /data/svn/myproject
 ```
 
 ### 3.配置 SVN 信息
 
+每个版本库创建之后都会生成svnserve.conf主要配置文件
 
 配置文件简介
 
@@ -39,9 +50,9 @@ yum install -y subversion
 ```java
 [groups]
 #用户组
-admin = admin,root,test
+admin = admin,root,test #admin为用户组,等号之后的admin为用户
 #用户组所对应的用户
-[/]
+[/] #表示根目录
 #库目录权限
 @admin = rw         
 #用户组权限
@@ -85,7 +96,21 @@ realm = /data/svn/myproject
 
 启动 SVN
 ```c++
+# -d : 守护进程  -r : svn数据根目录
 svnserve -d -r /data/svn
+```
+查看svn服务
+```c++
+ps aux |grep sunserve #默认端口号为：3690
+```
+设置开机启动
+```c++
+systemctl enable svnserve.service #注意：根目录必须是/var/svn 这样才能设置成功！！(有待验证)
+```
+开启、停止服务
+```c++
+$ sudo systemctl start svnserve.service
+$ sudo systemctl stop svnserve.service
 ```
 checkout SVN项目
 ```c++
