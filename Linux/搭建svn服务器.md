@@ -101,7 +101,7 @@ svnserve -d -r /data/svn
 ```
 查看svn服务
 ```c++
-ps aux |grep sunserve #默认端口号为：3690
+ps aux |grep svnserve #默认端口号为：3690
 ```
 设置开机启动
 ```c++
