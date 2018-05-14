@@ -105,7 +105,7 @@ ps aux |grep svnserve #默认端口号为：3690
 ```
 设置开机启动
 ```c++
-systemctl enable svnserve.service #注意：根目录必须是/var/svn 这样才能设置成功！！(有待验证)
+systemctl enable svnserve.service #注意：根目录必须是/var/svn 这样才能设置成功！！
 ```
 开启、停止服务
 ```c++
