@@ -30,20 +30,20 @@ IOS10开始放宽 autoplay 政策
 `<video> elements without playsinline attributes will continue to require fullscreen mode for playback on iPhone.`<br/>
 `When exiting fullscreen with a pinch gesture, <video> elements without playsinline will continue to play inline.`<br/>
 
-`<video autoplay>` 符合以下条件时，会立刻执行 autoplay 属性:
-`<video>` 资源数据不包含音轨，允许执行 autoplay。
-`<video muted>` elements will also be allowed to autoplay without a user gesture.
-`<video>` 如果增加音轨或者有声音没有用户互动，播放将会暂停。
-`<video autoplay>` 在屏幕中可见或滑动到viewport中是才会自动开始播放。
-`<video autoplay>` 不可见时将暂停播放。
-`<video>` 符合以下条件时，将支持 play() 方法:
-`<video>` 如果没有音轨或者 muted 属性设置为 true ，标签将支持 play() （不用用户互动）。
-如果 `<video>` 标签包含音轨或者有声音，自动播放将会暂定。
-`<video> elements will be allowed to play() when not visible on-screen or when out of the viewport.`
-`video.play() will return a Promise, which will be rejected if any of these conditions are not met.`
-在 iPhone 上 `<video playsinline>` 允许行内播放，不会自动进入全屏。
-`<video>` 标签没有 playsinline 属性将继续在全屏模式下播放。
-退出全屏 `<video>` 标签将继续在行内播放。
+`<video autoplay>` 符合以下条件时，会立刻执行 autoplay 属性:<br/>
+`<video>` 资源数据不包含音轨，允许执行 autoplay。<br/>
+`<video muted>` elements will also be allowed to autoplay without a user gesture.<br/>
+`<video>` 如果增加音轨或者有声音没有用户互动，播放将会暂停。<br/>
+`<video autoplay>` 在屏幕中可见或滑动到viewport中是才会自动开始播放。<br/>
+`<video autoplay>` 不可见时将暂停播放。<br/>
+`<video>` 符合以下条件时，将支持 play() 方法:<br/>
+`<video>` 如果没有音轨或者 muted 属性设置为 true ，标签将支持 play() （不用用户互动）。<br/>
+如果 `<video>` 标签包含音轨或者有声音，自动播放将会暂定。<br/>
+`<video> elements will be allowed to play() when not visible on-screen or when out of the viewport.`<br/>
+`video.play() will return a Promise, which will be rejected if any of these conditions are not met.`<br/>
+在 iPhone 上 `<video playsinline>` 允许行内播放，不会自动进入全屏。<br/>
+`<video>` 标签没有 playsinline 属性将继续在全屏模式下播放。<br/>
+退出全屏 `<video>` 标签将继续在行内播放。<br/>
 
 使用 video 代替 img 例子：
 
