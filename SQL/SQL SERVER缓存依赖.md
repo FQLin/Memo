@@ -2,9 +2,9 @@
 ---
 
 参考：<br/>
-https://blog.csdn.net/cai15191466621/article/details/7493308
-http://www.cnblogs.com/over140/archive/2009/01/15/1376318.html
-https://blog.csdn.net/czmao1985/article/details/6019142
+https://blog.csdn.net/cai15191466621/article/details/7493308<br/>
+http://www.cnblogs.com/over140/archive/2009/01/15/1376318.html<br/>
+https://blog.csdn.net/czmao1985/article/details/6019142<br/>
 (我突然发现不用所有内容都搬上来，只要我用到的时候能找到这个地址就行了)
 
 ## SQL server数据缓存依赖有两种实现模式，轮询模式，通知模式。
