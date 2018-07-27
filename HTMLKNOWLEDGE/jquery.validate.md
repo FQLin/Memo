@@ -9,30 +9,10 @@ if (!$jQval.element($("#Mobile"))) {
     return false;
 }
 
-//修改jQuery.validator默认的处理方法  
-jQuery.validator.setDefaults({  
-    event:"keyup",//触发校验的方式，可选值有keyup(每次按键时)，blur(当控件失去焦点时)  
-    debug:true,//如果这个参数为true，那么表单不会提交，只进行检查，调试时十分方便.   
-    ignore: "",  
-    errorClass : 'help-block',    
-    focusInvalid : true,  
-    onclick : function (element) {  
-        $(element).valid();  
-    },  
-    onfocusout: function (element) {  
-        $(element).valid();  
-    },  
-    highlight : function(element) {  
-        $(element).closest('.form-group').removeClass('has-success').addClass('has-error');  
-    },  
-    success : function(label) {    
-        label.closest('.form-group').removeClass('has-error').addClass('has-success');    
-        label.remove();    
-    },    
-    errorPlacement : function(error, element) {    
-        element.parent('div').append(error);    
-    }  
-});  
+//修改jQuery.validator默认配置
+jQuery.validator.setDefaults({
+            ignore: ""
+});
   
 //配置通用的默认提示语  
 $.extend($.validator.messages, {  
