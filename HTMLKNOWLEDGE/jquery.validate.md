@@ -10,6 +10,7 @@ if (!$jQval.element($("#Mobile"))) {
 }
 
 //修改jQuery.validator默认配置
+//不建议写在 dom 加载完成后的事件中，可能会不起总用
 jQuery.validator.setDefaults({
             ignore: ""
 });
