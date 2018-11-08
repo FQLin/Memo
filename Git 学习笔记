@@ -1,0 +1,13 @@
+中文文档地址：https://git-scm.com/book/zh/v2
+
+Upstream 的同步
+git remote add upstream git@github.com:...
+拉取 Upstream
+git fetch upstream
+合并
+git merge upstream/master
+push 到github
+git push origin master
+
+安装 gitlab
+https://about.gitlab.com/install/
