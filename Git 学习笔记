@@ -28,3 +28,10 @@ ssh-add ~/.ssh/id_rsa
 
 测试连接
 ssh -T git@github.com
+
+git 回退
+https://blog.csdn.net/zhezhebie/article/details/79420752
+
+git checkout [<options>] [<branch>] -- <file>...
+
+git checkout  ee25a1a3f9465 SQL/README.md
