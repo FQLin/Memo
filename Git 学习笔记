@@ -11,3 +11,20 @@ git push origin master
 
 安装 gitlab
 https://about.gitlab.com/install/
+
+ssh-keygen 生成key
+
+http://man.linuxde.net/ssh-add
+https://www.cnblogs.com/lxwphp/p/7884700.html
+http://www.cnblogs.com/Security-Darren/p/4106328.html
+
+git fetch
+
+启动 ssh-agent
+eval `ssh-agent -s`
+
+添加 key
+ssh-add ~/.ssh/id_rsa
+
+测试连接
+ssh -T git@github.com
