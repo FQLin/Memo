@@ -35,3 +35,6 @@ https://blog.csdn.net/zhezhebie/article/details/79420752
 git checkout [<options>] [<branch>] -- <file>...
 
 git checkout  ee25a1a3f9465 SQL/README.md
+
+添加remote
+$ git remote add origin ssh://xxx
