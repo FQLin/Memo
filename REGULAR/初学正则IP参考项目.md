@@ -101,3 +101,62 @@
         }
     }
 ```
+
+```c#
+        public static void Init()
+        {
+
+            //FileInfo sqlFile = new FileInfo("../../../part01.txt");
+            FileInfo sqlFile = new FileInfo("../../../Dump20170921.sql");
+            Regex reg = new Regex(@"(\(\d+\,\d*\,\'[^']+\'\,\d*\,\'[^']+\'\,\'[^']*\'\,\'[^']*\'\))");
+            List<IP_Datum> addresses = new List<IP_Datum>();
+            using (StreamReader file = new StreamReader(sqlFile.FullName, Encoding.Default))
+            {
+                string filecontent = file.ReadToEnd();
+                //List<string> matches = Match(new List<string>(), filecontent);
+                MatchCollection matches = reg.Matches(filecontent);
+
+                //Parallel.ForEach(matches, (m, loopState) =>
+                //{
+                //    string modeltxt = m.Value.Substring(1, m.Value.Length - 2);
+                //    string[] modelpro = modeltxt.Split(',');
+                //    addresses.Add(new IP_Datum()
+                //    {
+                //        StartIPId = Convert.ToInt64(modelpro[1]),
+                //        StartIP = modelpro[2].Replace("'", string.Empty),
+                //        EndIPId = Convert.ToInt64(modelpro[3]),
+                //        EndIP = modelpro[4].Replace("'", string.Empty),
+                //        Area = modelpro[5].Replace("'", string.Empty),
+                //        Org = modelpro[6].Replace("'", string.Empty)
+                //    });
+                //});
+
+                foreach (Match m in matches)
+                {
+                    string modeltxt = m.Value.Substring(1, m.Value.Length - 2);
+                    string[] modelpro = modeltxt.Split(',');
+                    addresses.Add(new IP_Datum()
+                    {
+                        StartIPId = Convert.ToInt64(modelpro[1]),
+                        StartIP = modelpro[2].Replace("'", string.Empty),
+                        EndIPId = Convert.ToInt64(modelpro[3]),
+                        EndIP = modelpro[4].Replace("'", string.Empty),
+                        Area = modelpro[5].Replace("'", string.Empty),
+                        Org = modelpro[6].Replace("'", string.Empty)
+                    });
+                }
+            }
+
+            
+            SqlSugarClient client = new SqlSugarClient(new ConnectionConfig()
+            {
+                ConnectionString = "Data Source=10.1.2.12;Initial Catalog=JC_GlobalSite;User Id=sa;Password=123456",
+                DbType = DbType.SqlServer,
+                IsAutoCloseConnection = true
+            });
+            int result = client.Insertable(addresses).ExecuteCommand();
+
+            Console.Write($"插入{result}条");
+            Console.ReadKey();
+        }
+```
