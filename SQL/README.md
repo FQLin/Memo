@@ -3,6 +3,8 @@
 将一个结果集放入变量中，变量的类型要声明为 `table`，例如：
 ```sql
 declare @CourseIds table(Id varchar(32))
+--变量赋值
+insert into @CourseIds select * from ... 
 
 --一、修改字段默认值
 
