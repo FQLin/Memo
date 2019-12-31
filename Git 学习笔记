@@ -1,7 +1,7 @@
 中文文档地址：https://git-scm.com/book/zh/v2
 
-Upstream 的同步
-git remote add upstream git@github.com:...
+添加remote
+$ git remote add origin ssh://xxx
 拉取 Upstream
 git fetch upstream
 合并
@@ -35,6 +35,3 @@ https://blog.csdn.net/zhezhebie/article/details/79420752
 git checkout [<options>] [<branch>] -- <file>...
 
 git checkout  ee25a1a3f9465 SQL/README.md
-
-添加remote
-$ git remote add origin ssh://xxx
