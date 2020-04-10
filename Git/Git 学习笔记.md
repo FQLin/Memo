@@ -23,7 +23,7 @@ git fetch
 启动 ssh-agent
 eval `ssh-agent -s`
 
-添加 key 可以不用每次都输入password
+添加 key
 ssh-add ~/.ssh/id_rsa
 
 测试连接
