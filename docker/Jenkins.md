@@ -3,6 +3,8 @@
 To use the latest LTS: docker` pull jenkins/jenkins:lts`
 To use the latest weekly: `docker pull jenkins/jenkins`
 
+nginx关于ssl的配置在`/etc/nginx`文件夹中
+
 GitHub文档：https://github.com/jenkinsci/docker/blob/master/README.md
 官方文档：https://jenkins.io/zh/doc/book/installing/#docker
 
