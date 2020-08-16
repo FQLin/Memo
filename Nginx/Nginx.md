@@ -13,10 +13,16 @@
     --rm ^
     -p 5050:80 ^
     nginx
+
+    md f:\docker\etc\nginx
     
-    docker cp 8bd03f16d80e:/etc/nginx/conf.d f:\docker\nginx\etc\nginx\conf.d
-    docker cp 8bd03f16d80e:/etc/nginx/nginx.conf f:\docker\nginx\etc\nginx\
-    docker cp 8bd03f16d80e:/etc/nginx/mime.types f:\docker\nginx\etc\nginx\
+    docker cp mynginx:/etc/nginx/conf.d f:\docker\etc\nginx\conf.d
+    docker cp mynginx:/etc/nginx/nginx.conf f:\docker\etc\nginx\
+    docker cp mynginx:/etc/nginx/mime.types f:\docker\etc\nginx\
+
+    md f:\docker\var\log
+
+    docker cp mynginx:/var/log/nginx f:\docker\var\log\nginx
     
     docker run ^
     --name mynginx2 ^
@@ -48,5 +54,11 @@
 |/var/cache/nginx|目录|Nginx的缓存目录|
 |/var/log/nginx|目录|日志的目录|
 
-
 安装编译参数：nginx -V
+
+重启Nginx服务：systemctl restart nginx.service
+systemctl reload nginx.service
+
+停止服务：nginx -s stop -c /etc/nginx/nginx.conf
+启动服务：nginx -c /etc/nginx/nginx.conf
+检查配置语法：nginx -tc /etc/nginx/nginx.conf
