@@ -54,11 +54,107 @@
 |/var/cache/nginx|目录|Nginx的缓存目录|
 |/var/log/nginx|目录|日志的目录|
 
-安装编译参数：nginx -V
+> 安装编译参数：nginx -V
 
-重启Nginx服务：systemctl restart nginx.service
+>重启Nginx服务：systemctl restart nginx.service
 systemctl reload nginx.service
 
-停止服务：nginx -s stop -c /etc/nginx/nginx.conf
-启动服务：nginx -c /etc/nginx/nginx.conf
-检查配置语法：nginx -tc /etc/nginx/nginx.conf
+>停止服务：nginx -s stop -c /etc/nginx/nginx.conf
+
+>启动服务：nginx -c /etc/nginx/nginx.conf
+
+>检查配置语法：nginx -tc /etc/nginx/nginx.conf
+
+## `expires`
+### 添加`Cache-Control、Expires`头
+``` conf
+Syntax：expires [modified] time;
+expires epoch | max |off;
+Default:expires off;
+Context:http,server,location,if in location;
+```
+``` conf
+Syntax:add_header name value [always];
+Default:-
+Context:http,server,location,if in location
+```
+``` conf
+http_refer
+Syntax:valid_referers none | blocked | server_names |string ...;
+Default:-
+Context:server,location
+```
+``` conf
+Syntax:proxy_pass URL;
+Default:-
+Context:location,if in location,limit_except
+```
+``` conf
+Syntax:fastcgi_pass address;
+Default:-
+Context:location,if in location
+
+fastcgi_pass unix:/tmp/fastcgi.socket
+```
+``` conf
+Syntax:fastcgi_index name;
+Default:-
+Context:http,server,location
+```
+``` conf
+Syntax:fastcgi_param parameter value [if_not_empty];
+Default:-
+Context:http,server,location
+```
+``` conf
+Syntax:fastcgi_cache_path path [levels=levels] keys_zone-name:size [inactive=time] [max_size=size]...;
+Default:-
+Context:http
+```
+``` conf
+Syntax:fastcgi_cache_key string;
+Default:-
+Context:http,server,location
+```
+``` conf
+Syntax:fastcgi_cache zone |off;
+Default:fastcgi_cache off;
+Context:http,server,location
+```
+``` conf
+Syntax:fastcgi_cache_valid [code...] time;
+Default:-
+Context:http,server,location
+```
+``` conf
+
+```
+``` conf
+
+```
+``` conf
+
+```
+``` conf
+
+```
+``` conf
+
+```
+``` conf
+
+```
+``` conf
+
+```
+``` conf
+
+```
+``` conf
+
+```
+
+
+``` conf
+
+```
