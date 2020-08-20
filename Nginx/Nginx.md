@@ -127,8 +127,28 @@ Default:-
 Context:http,server,location
 ```
 ``` conf
-
+Syntax:upstream name {...}
+Default:-
+Context:http
 ```
+|||
+|:-----|:-----|
+|`down`|当前的`server`暂时不参与负载均衡|
+|`backup`|预留的备份服务器|
+|`max_fails`|允许请求失败的次数|
+|`fail_timeout`|经过`max_fails`失败后，服务暂停的时间|
+|`max_conns`|限制最大的接受的连接数|
+
+## 调度算法
+|||
+|:-----|:-----|
+|轮询|按时间顺序注意分配到不同的后端服务器|
+|加权轮询|`weight`值越大，分配到的访问几率越大|
+|`ip_hash`|每个请求按访问`IP`的`hash`结果分配，这样来自同一个`IP`的固定访问一个后端服务器|
+|`url_hash`|按照访问的`URL`的`hash`结果来分配请求，是每个`URL`定向到一个后端服务器|
+|`l`east_conn`|最少连接数，那个机器连接数少就分发|
+|`hash`关键数值|`hash`自定义的`key`|
+
 ``` conf
 
 ```
