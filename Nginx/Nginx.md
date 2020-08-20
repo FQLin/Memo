@@ -146,35 +146,56 @@ Context:http
 |加权轮询|`weight`值越大，分配到的访问几率越大|
 |`ip_hash`|每个请求按访问`IP`的`hash`结果分配，这样来自同一个`IP`的固定访问一个后端服务器|
 |`url_hash`|按照访问的`URL`的`hash`结果来分配请求，是每个`URL`定向到一个后端服务器|
-|`l`east_conn`|最少连接数，那个机器连接数少就分发|
+|`least_conn`|最少连接数，那个机器连接数少就分发|
 |`hash`关键数值|`hash`自定义的`key`|
-
+### `url_hash`
 ``` conf
-
+Syntax:hash key [consistent];
+Default:-
+Context:upstream
+This directive appeared in version 1.7.2
 ```
 ``` conf
-
+Syntax:rewrite regex replacement [flag];
+Default:-
+Context:server,location,if
+```
+### `flag`
+|||
+|:-----|:-----|
+|`last`|停止`rewrite`检测（类似重新发送请求，但不是重定向）|
+|`break`|停止`rewrite`检测|
+|`redirect`|返回302临时重定向，地址栏会显示跳转后的地址|
+|`permanent`|返回301永久重定向，地址栏会显示跳转后的地址|
+## `secure_link_module`配置语法
+``` conf
+Syntax:secure_link expression;
+Default:-
+Context:http,server,location
 ```
 ``` conf
-
+Syntax:secure_link_md5 expression;
+Default:-
+Context:http,server,location
+```
+## IP地域信息
+``` conf
+yum install nginx-module-geoip
+```
+## `https`语法配置
+``` conf
+Syntax:ssl on | off;
+Default:ssl off;
+Context:http,server
 ```
 ``` conf
-
+Syntax:ssl_certificate file;
+Default:-
+Context:http,server
 ```
 ``` conf
-
+Syntax:ssl_certificate_key file;
+Default:-
+Context:http,server
 ```
-``` conf
-
-```
-``` conf
-
-```
-``` conf
-
-```
-
-
-``` conf
-
-```
+上传文件限制：client_max_body_size
