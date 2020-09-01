@@ -143,14 +143,25 @@ EOF
 chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/ipvs.modules && lsmod | grep -e ip_vs -e nf_conntrack_ipv4
 ```
 
-#### 安装`docker`
+#### [安装](https://docs.docker.com/engine/install/centos/)`docker`
 
 ```bash
+yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+
 yum install -y yum-utils
 
 yum-config-manager \
  --add-repo \
  http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+ 
+ yum install docker-ce docker-ce-cli containerd.io
  
 mkdir /etc/docker
 
@@ -266,5 +277,184 @@ kubectl delete -f kube-flannel.yml
 ```shell
 docker save quay.io/coreos/flannel:v0.12.0-amd64 -o flannel.tar
 docker pull quay.io/coreos/flannel:v0.12.0-amd64
+```
+
+### [Harbor](https://github.com/vmware/harbor)
+
+```shell
+# 生成证书
+openssl genrsa -out ca.key 4096
+
+openssl req -x509 -new -nodes -sha512 -days 3650 \
+ -subj "/C=CN/ST=Shanghai/L=Shanghai/O=fanqinglin/OU=IT/CN=fanqinglin.com" \
+ -key ca.key \
+ -out ca.crt
+ 
+ 
+openssl genrsa -out hub.fanqinglin.com.key 4096
+
+
+openssl req -sha512 -new \
+    -subj "/C=CN/ST=Shanghai/L=Shanghai/O=k8s-harbor/OU=Personal/CN=hub.fanqinglin.com" \
+    -key hub.fanqinglin.com.key \
+    -out hub.fanqinglin.com.csr
+    
+    
+cat > v3.ext <<-EOF
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1=hub.fanqinglin.com
+DNS.2=hub.fanqinglin
+DNS.3=hoarbor
+EOF
+
+
+openssl x509 -req -sha512 -days 3650 \
+    -extfile v3.ext \
+    -CA ca.crt -CAkey ca.key -CAcreateserial \
+    -in hub.fanqinglin.com.csr \
+    -out hub.fanqinglin.com.crt
+    
+
+openssl x509 -inform PEM -in hub.fanqinglin.com.crt -out hub.fanqinglin.com.cert
+
+# 复制证书到指定目录
+
+mkdir -p /data/cert
+cp hub.fanqinglin.com.crt /data/cert
+cp hub.fanqinglin.com.key /data/cert
+
+mkdir -p /etc/docker/certs.d/hub.fanqinglin.com
+cp hub.fanqinglin.com.cert /etc/docker/certs.d/hub.fanqinglin.com 
+cp hub.fanqinglin.com.key /etc/docker/certs.d/hub.fanqinglin.com 
+cp ca.crt /etc/docker/certs.d/hub.fanqinglin.com
+
+systemctl restart docker
+
+# 修改harbor配置文件
+# vim /data/app/harbor/harbor.yml.tmpl
+
+hostname: hub.fanqinglin.com
+  certificate: /data/cert/hub.fanqinglin.com.crt 
+  private_key: /data/cert/hub.fanqinglin.com.key
+harbor_admin_password: Harbor12345
+
+# 安装 Harbor
+mv harbor.yml.tmpl harbor.yml
+./prepare 
+./install.sh 
+```
+
+
+
+#### [`docker-compose`](https://github.com/docker/compose)[安装](https://docs.docker.com/compose/install/)
+
+```shell
+sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+docker-compose --version
+```
+
+#### 私有仓储
+
+```shell
+docker login -u admin -p Harbor12345 hub.fanqinglin.com
+docker tag nginx:latest hub.fanqinglin.com/library/nginx:v1
+docker push hub.fanqinglin.com/library/nginx:v1
+```
+
+`kubecrl` [`CLI`](https://kubernetes.io/zh/docs/reference/kubectl/overview/)
+
+```shell
+kubectl run nginx-deployment --image=hub.fanqinglin.com/library/nginx:v1 --port=80 --replicas=1
+
+kubectl get pod -o wide
+
+kubectl expose po nginx-deployment --port=8083 --target-port=80
+kubectl edit svc nginx-deployment
+# type 修改为 NodePort 所有节点都会暴漏
+```
+
+### 资源清单
+
+##### 必须存在的属性
+
+| 参数名                    | 字段类型 | 说明                                                  |
+| ------------------------- | -------- | ----------------------------------------------------- |
+| `version`                 | `String` | k8s api版本，基本是v1，kubectl api-versions命令可查询 |
+| `kind`                    | `String` | yaml文件定义的资源类型和角色，比如：pod               |
+| `metadata`                | `Object` | 元数据对象，固定值就写 metadata                       |
+| `metadata.name`           | `String` | 元数据对象名称，比如命名pod的名字                     |
+| `metadata.namespace`      | `String` | 元数据对象的命名空间                                  |
+| `Spec`                    | `Object` | 详细定义对象 Spec                                     |
+| `spec.containers[]`       | `list`   | 容器列表                                              |
+| `spec.containers[].name`  | `String` | 容器名称                                              |
+| `spec.containers[].image` | `String` | 容器镜像                                              |
+
+##### 主要对象
+
+| 参数名                                       | 字段类型 | 说明                                                         |
+| -------------------------------------------- | -------- | ------------------------------------------------------------ |
+| `spec.containers[].name`                     | `String` | 容器名称                                                     |
+| `spec.containers[].image`                    | `String` | 容器镜像                                                     |
+| `spec.containers[].imagePullPolicy`          | `String` | 镜像拉取策略 Always(默认，每次都尝试拉取)\|Never（只使用本地镜像）\|ifNotPresent（本地没有就拉取） |
+| `spec.containers[].command[]`                | `List`   | 启动命令                                                     |
+| `spec.containers[].args[]`                   | `List`   | 命令参数                                                     |
+| `spec.containers[].workingDir`               | `String` | 工作目录                                                     |
+| `spec.containers[].volumeMounts[]`           | `List`   | 容器存储卷配置                                               |
+| `spec.containers[].volumeMounts[].name`      | `String` | 存储卷名称                                                   |
+| `spec.containers[].volumeMounts[].mountPath` | `String` | 存储卷路径                                                   |
+| `spec.containers[].volumeMounts[].readOnly`  | `String` | 存储卷读写模式，默认false                                    |
+| `spec.containers[].ports[]`                  | `String` | 需要用到的端口列表                                           |
+| `spec.containers[].ports[].name`             | `List`   | 端口名称                                                     |
+| `spec.containers[].ports[].containerPort`    | `String` | 容器需要监听的端口                                           |
+| `spec.containers[].ports[].hostPort`         | `String` | 宿主机监听的端口，默认和containerPort相同（注意端口冲突）    |
+| `spec.containers[].ports[].protocol`         | `String` | 端口协议 TCP（默认）/UDP                                     |
+| `spec.containers[].env[].name`               | `String`   | 环境变量名称                                                   |
+| `spec.containers[].env[].value`              | `String`   | 环境变量变量值                                                  |
+| `spec.containers[].resources`                | `Object`   | 资源限制，资源请求                                          |
+| `spec.containers[].resources.limits`                         | `Object`   | 资源运行上限                                             |
+| `spec.containers[].resources.limits.cpu`| `string`   | cpu限制，core数，docker run --cpu-shares参数                                                     |
+| `spec.containers[].resources.limits.memory` | `string`   | 内存限制，MIB/GiB   |
+| `spec.containers[].resources.requests`   | `Object`   | 启动、调度限制设置                                                     |
+| `spec.containers[].resources.requests.cpu`   | `string`   | cpu 初始化可用数量                                                     |
+| `spec.containers[].resources.requests.memory`      | `string`   | 内存初始化可用数量 |
+
+##### 额外参数
+
+| 参数名 | 字段类型 | 说明 |
+| ------ | -------- | ---- |
+| `spec.restartPolicy` | `String` |pod重启策略，Always\|OnFailure（非零退出终止 重启）\|Never|
+| `spec.nodeSelector` | `Object` | Node的Label过滤标签 key：value |
+| `spec.imagePullSecrets` | `Object` | pull镜像时 secret 名称，name：secretkey |
+| `spec.hostNetwork` | `Boolean|false` | 主机模式 |
+
+```shell
+kubectl explain pod #命名详细信息
+```
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx
+    version: v1
+spec:
+  containers:
+    - name: nginx01
+      image: hub.fanqinglin.com/library/nginx:v1
+```
+
+```shell
+kubectl create -f pod01.yaml
 ```
 
