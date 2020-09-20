@@ -21,12 +21,9 @@ redis-server rconfig/redis.conf
 # 关闭
 127.0.0.1:6379> shutdown
 ```
-
  ![image-20200919175116757](./images/image-20200919175116757.png)
 
 ![image-20200919175659448](./images/image-20200919175659448.png)
-
-#### [`redis-benchmark`](http://www.redis.cn/topics/benchmarks.html)
 
 ```bash
 # 测试：100并发，十万请求
