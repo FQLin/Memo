@@ -1,2 +1,0 @@
-FROM centos
-ADD redis-6.0.8.tar.gz /opt/redis
