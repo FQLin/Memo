@@ -317,5 +317,8 @@ appendfsync everysec
 127.0.0.1:6379> config get dir
 1) "dir"
 2) "/usr/local/bin"
+
+# aof文件有问题，无法启动，可以使用 redis-check-aof 检测文件,可能会丢失数据
+redis-check-aof --fix appendonly.aof
 ```
 

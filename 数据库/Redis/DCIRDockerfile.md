@@ -18,8 +18,8 @@ RUN make
 RUN make install
 # 默认的安装路径 /usr/local/bin
 WORKDIR /usr/local/bin
-RUN mkdir rconfig
-RUN cp /opt/redis/redis-6.0.8/redis.conf rconfig
+RUN mkdir config
+RUN cp /opt/redis/redis-6.0.8/redis.conf config
 
 
 
