@@ -210,6 +210,8 @@ OK
 
 [`DISCARD`](http://www.redis.cn/commands/discard.html) 放弃事务
 
+`Jedis `可以进行管道的操作
+
 #### 锁
 
 [`WATCH`](http://www.redis.cn/commands/watch.html)
@@ -369,6 +371,7 @@ repl_backlog_histlen:0
 
 # 配置文件配置
 replicaof <masterip> <masterport>
+bind 0.0.0.0
 
 # master IP
 docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' redisMaster
@@ -396,5 +399,23 @@ repl_backlog_active:0
 repl_backlog_size:1048576
 repl_backlog_first_byte_offset:0
 repl_backlog_histlen:0
+```
+
+master断开，redis只有读操作，没有了写操作
+
+cmd添加的slave断了之后不会重新连接到主机
+
+全量复制、增量复制
+
+#### [哨兵](http://www.redis.cn/topics/sentinel.html)模式`sentinel /ˈsentɪnl/`
+
+``` bash
+# 哨兵配置文件 sentinel.conf
+# sentinel monitor 被监控的名称 host port 1（投票）
+sentinel monitor redis_sentinel 172.21.0.2 6379 1
+# 启动哨兵
+redis-sentinel sentinel.conf
+
+# 主机重新启动，只能成为 slave
 ```
 

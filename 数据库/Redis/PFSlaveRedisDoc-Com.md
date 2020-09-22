@@ -1,61 +1,16 @@
-```bash
-docker-compose -f devredisdocker-compose.yaml up -d
-docker exec -it devRedis bash
-```
+## 薪火相传 主从复制模式
 
-#### `docker-compose redis`测试
-
-```yaml
-#RedisDockerfile
+``` yaml
+# pf01slave_redis_dockerfile
+# 第二层依然是从节点，无法写入
 FROM redis
-COPY ./config/redis.conf /opt/redis/redis.conf
+COPY ./config/pf01slave-redis.conf /opt/redis/redis.conf
 # 注意 conf 中的 daemonize 不能再守护进程模式下运行
 CMD [ "redis-server", "/opt/redis/redis.conf" ]
-```
-
-```yaml
-# devredisdocker-compose.yaml
-version: "3.8"
-services:
-  devredis:
-    build:
-      context: .
-      dockerfile: RedisDockerfile
-      target: "dev"
-    restart: always
-    container_name: "devRedis"
-    ports:
-      - "6667:6379"
-```
-
-### 主从复制
-
-``` cmd
-docker-compose -f slave-redis-docker-compose.yaml up -d
 ```
 
 ``` yaml
-# master_redis_dockerfile
-FROM redis
-COPY ./config/master-redis.conf /opt/redis/redis.conf
-# 注意 conf 中的 daemonize 不能再守护进程模式下运行
-CMD [ "redis-server", "/opt/redis/redis.conf" ]
-```
-
-
-
-```yaml
-# slave_redis_dockerfile
-# replicaof 172.21.0.2 6379
-FROM redis
-COPY ./config/slave-redis.conf /opt/redis/redis.conf
-# 注意 conf 中的 daemonize 不能再守护进程模式下运行
-CMD [ "redis-server", "/opt/redis/redis.conf" ]
-```
-
-```yaml
-# slave-redis-docker-compose.yaml
-
+# pf01slave-redis-docker-compose.yaml
 version: "3.8"
 services:
   master:
@@ -87,7 +42,7 @@ services:
   slaves02:
     build:
       context: .
-      dockerfile: slave_redis_dockerfile
+      dockerfile: pf01slave_redis_dockerfile
     restart: unless-stopped
     container_name: "redisSlaves02"
     ports:
@@ -100,7 +55,7 @@ services:
   slaves03:
     build:
       context: .
-      dockerfile: slave_redis_dockerfile
+      dockerfile: pf01slave_redis_dockerfile
     restart: unless-stopped
     container_name: "redisSlaves03"
     ports:
