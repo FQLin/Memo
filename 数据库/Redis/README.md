@@ -1,15 +1,18 @@
----
-typora-copy-images-to: images
----
-
 #### 图片
 
 - 分布式文件系统 FastDFS
-
 - 淘宝 TFS
 - Google GFS
 - Hadoop HDFS
 - 阿里云 oss
+
+```bash
+docker run --name redis01 --rm -p 6666:6379 -d redis
+docker exec -it redis01 bash
+docker cp f:/redis/config/redis01.conf redis01:/data/redis.conf
+```
+
+
 
 # [`Redis`](https://redis.io/) [中文网](http://www.redis.cn/)
 
@@ -320,5 +323,78 @@ appendfsync everysec
 
 # aof文件有问题，无法启动，可以使用 redis-check-aof 检测文件,可能会丢失数据
 redis-check-aof --fix appendonly.aof
+```
+
+#### 订阅发布
+
+```bash
+# psubscribe pattern [pattern] 订阅
+# pubsub subcommand [argument [argument]] 查看订阅、发布状态
+# publish channel message 发送 message
+# punsubscribe [pattern [pattern]] 退订
+# subscribe channel [channel] 订阅
+# unsubscribe channel [channel] 退订
+
+# 订阅端
+127.0.0.1:6379> SUBSCRIBE fanqinglin
+Reading messages... (press Ctrl-C to quit)
+1) "subscribe"
+2) "fanqinglin"
+3) (integer) 1
+1) "message"
+2) "fanqinglin"
+3) "hello fan message"
+
+# 发送端
+127.0.0.1:6379> PUBLISH fanqinglin "hello fan message"
+(integer) 1
+```
+
+#### 主从复制
+
+```bash
+# 查看当前库的信息
+127.0.0.1:6379> info replication
+# Replication
+role:master # 角色
+connected_slaves:0 # 从机
+master_replid:4c434c94911042206dacc8aea6ea4ccc7ad24e2b
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:0
+second_repl_offset:-1
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+
+# 配置文件配置
+replicaof <masterip> <masterport>
+
+# master IP
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' redisMaster
+# 链接主机
+127.0.0.1:6379> SLAVEOF 172.19.0.3 6379
+OK
+127.0.0.1:6379> info replication
+# Replication
+role:slave
+master_host:172.19.0.3
+master_port:6379
+master_link_status:down
+master_last_io_seconds_ago:-1
+master_sync_in_progress:0
+slave_repl_offset:0
+master_link_down_since_seconds:1600777207
+slave_priority:100
+slave_read_only:1
+connected_slaves:0
+master_replid:d9a7e2117757ed5b121deb285a7df248de5aa2bc
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:0
+second_repl_offset:-1
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
 ```
 
