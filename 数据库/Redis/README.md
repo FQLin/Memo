@@ -410,8 +410,8 @@ cmd添加的slave断了之后不会重新连接到主机
 #### [哨兵](http://www.redis.cn/topics/sentinel.html)模式`sentinel /ˈsentɪnl/`
 
 ``` bash
-# 哨兵配置文件 sentinel.conf
-# sentinel monitor 被监控的名称 host port 1（投票）
+# 哨兵配置文件 sentinel.conf 可以在安装包中找到
+# sentinel monitor 被监控的名称 host port 最后一个quorum的意思是有几台 Sentinel发现有问题，就会发生故障转移
 sentinel monitor redis_sentinel 172.21.0.2 6379 1
 # 启动哨兵
 redis-sentinel sentinel.conf
@@ -419,3 +419,53 @@ redis-sentinel sentinel.conf
 # 主机重新启动，只能成为 slave
 ```
 
+##### `sentinel.conf`详解
+
+```  bash
+# 哨兵默认使用端口
+port 26379
+# sentinel monitor <master-name> <ip> <redis-port> <quorum>
+sentinel monitor mymaster 127.0.0.1 6379 2
+# 默认延时操作
+# Default is 30 seconds.
+sentinel down-after-milliseconds mymaster 30000
+```
+
+#### 集群
+
+``` bash
+# 1.Redis 集群是无中心的
+# 2.Redis 集群有一个ping-pang机制
+# 3.投票机制，Redis集群节点数量必须是2n + 1
+# 4.Redis 集群中默认分配了16384个hash槽，在存储数据时，就会将key进行crc16的算法，并且对16384取余，根据最终的结果，key-value会存放在不同的Redis节点中
+# 5.每个节点都至少有一个从节点
+# 6.单独针对Redis集群某个节点搭建主从
+# 7.半数节点宕机，集群瘫痪
+
+# 开启集群
+cluster-enabled yes
+# 集群节点配置
+cluster-config-file nodes-6379.conf
+# 对外IP
+# * cluster-announce-ip
+# 对外端口号
+# * cluster-announce-port
+# 总线端口号
+# * cluster-announce-bus-port
+
+redis-cli --cluster create nodeip:port [,nodeip:port [,nodeip:port...]] --cluster-replicas 1
+```
+
+##### `Redis`删除策略
+
+> 1.定期删除，100ms查看3个key。
+>
+> 2.惰性删除
+
+> 缓存穿透：查不到。解决： 布隆过滤器，缓存空对象
+>
+> 缓存击穿：过期段内大量请求。解决：永不过期，加分布式锁
+>
+> 缓存雪崩：缓存集体失效、redis宕机。
+>
+> 缓存倾斜：热点数据都在一台机器上。解决：扩展主从，redis之前设置cache
