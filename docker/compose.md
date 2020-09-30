@@ -41,3 +41,32 @@ version: "3.8"
         - "8080:80"
         - "8022:22"
 ```
+
+version: "3.8"
+services:
+  nginx:
+    restart: unless-stopped
+    image: nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/docker-volumes/nginx/etc/nginx/conf.d:/etc/nginx/conf.d"
+      - "/docker-volumes/nginx/etc/nginx/nginx.conf:/etc/nginx/nginx.conf"
+      - "/docker-volumes/nginx/etc/nginx/mime.types:/etc/nginx/mime.types"
+      - "/docker-volumes/nginx/var/log/nginx:/var/log/nginx"
+  code-server:
+    restart: unless-stopeed
+    image: linuxserver/code-server
+    container_name: code-server
+    ports:
+      - "6660:8443"
+      - "6661:80"
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Asia/Shanghai"
+      - "PASSWORD=password #optional"
+      - "SUDO_PASSWORD=password #optional"
+      - "PROXY_DOMAIN=code-server.my.domain #optional"
