@@ -4,6 +4,7 @@ docker pull centos
 docker run --name centos01 --rm -p 10022:22 -itd centos /bin/bash
 
 docker run --name centos01 --rm --ip=192.168.6.1 -itd centos /bin/bash
+docker run --name centos02 --rm -itd --privileged=true centos /bin/bash
 
 docker exec -it centos01 bash
 
@@ -99,7 +100,7 @@ mkdir centos.back
 mv  *.repo  centos.back
 # 下载国内源文件
 wget http://mirrors.aliyun.com/repo/Centos-8.repo #阿里源
-wget http://mirrors.163.com/.help/CentOS8-Base-163.repo  #163源
+# wget http://mirrors.163.com/.help/CentOS8-Base-163.repo  #163源
 # 清空缓存和生成缓存
 yum clean all 
 yum makecache  

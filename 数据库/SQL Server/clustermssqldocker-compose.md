@@ -8,7 +8,7 @@ docker-compose -f clustermssqldocker-compose.yaml up -d
 version: "3.8"
 services:
   mssql01:
-    restart: always
+    restart: unless-stopped
     image: registry.cn-hangzhou.aliyuncs.com/newbe36524/server:2019-latest
     container_name: SQLServer01
     ports:
@@ -20,7 +20,7 @@ services:
     volumes:
       - "/f/docker-compose/mssql01/data:/var/opt/mssql/data"
   mssql02:
-    restart: always
+    restart: unless-stopped
     image: registry.cn-hangzhou.aliyuncs.com/newbe36524/server:2019-latest
     container_name: SQLServer02
     ports:
@@ -32,7 +32,7 @@ services:
     volumes:
       - "/f/docker-compose/mssql02/data:/var/opt/mssql/data"
   mssql03:
-    restart: always
+    restart: unless-stopped
     image: registry.cn-hangzhou.aliyuncs.com/newbe36524/server:2019-latest
     container_name: SQLServer03
     ports:
@@ -42,6 +42,7 @@ services:
       SA_PASSWORD: "Abc123456."
       MSSQL_PID: "Developer"
     volumes:
-      - "/f/docker-compose/mssql03/data:/var/opt/mssql/data" 
+      - "/f/docker-compose/mssql03/data:/var/opt/mssql/data"
+      
 ```
 

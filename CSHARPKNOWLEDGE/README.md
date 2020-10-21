@@ -1,3 +1,5 @@
+### 相对路径、绝对路径
+
 1.Request.ApplicationPath->当前应用的目录 
 Jsp中, ApplicationPath指的是当前的application(应用程序)的目录,ASP.NET中也是这个意思。 
 对应的--例如我的服务器上有两个web应用域名都是mockte.com 一个映射到目录mockte.com/1/ 另一个影射到 http://mockte.com/2/ 
@@ -20,5 +22,9 @@ Path 是 FilePath 和 PathInfo 尾部的串联。例如 URL http://mockte.com/1/
 例如 http://mockte.com/1/index.html 假设你的应用程序在c:/iis/MySite中 
 那么就是 c:/iis/MySite/1/index.html
 
-
 https://blog.csdn.net/devillyd/article/details/5896819
+
+### 缓存
+
+缓存失效的回调不是立刻执行的，而是在进行缓存操作的时候才对缓存进行检查，如果失效的话执行失效回调。
+可以在`MemoryCacheOptions`中配置缓存失效扫描间隔，但会有性能损耗

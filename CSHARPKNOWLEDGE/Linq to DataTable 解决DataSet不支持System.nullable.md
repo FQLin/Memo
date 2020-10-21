@@ -1,3 +1,4 @@
+``` C#
 static public  DataTable ToDataTable<T>(this IEnumerable<T> varlist, CreateRowDelegate<T> fn)
         {
 
@@ -52,6 +53,6 @@ static public  DataTable ToDataTable<T>(this IEnumerable<T> varlist, CreateRowDe
 
         public delegate object[] CreateRowDelegate<T>(T t);
     }
-    
-    
-    http://minmin86121.blog.163.com/blog/static/49681157201311291014409/
+```
+http://minmin86121.blog.163.com/blog/static/49681157201311291014409/
+

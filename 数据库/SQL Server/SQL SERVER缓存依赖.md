@@ -1,36 +1,37 @@
-# SQL SERVER 缓存依赖
+## SQL SERVER 缓存依赖
 ---
 
-参考：<br/>
-https://blog.csdn.net/cai15191466621/article/details/7493308<br/>
-http://www.cnblogs.com/over140/archive/2009/01/15/1376318.html<br/>
-https://blog.csdn.net/czmao1985/article/details/6019142<br/>
-(我突然发现不用所有内容都搬上来，只要我用到的时候能找到这个地址就行了)
+##### 参考：
 
-## SQL server数据缓存依赖有两种实现模式，轮询模式，通知模式。
+- https://blog.csdn.net/cai15191466621/article/details/7493308
+- http://www.cnblogs.com/over140/archive/2009/01/15/1376318.html
+- https://blog.csdn.net/czmao1985/article/details/6019142
+
+### SQL server数据缓存依赖有两种实现模式，轮询模式，通知模式。
 ### 1.  轮询模式实现步骤
 
 > 此模式需要SQL SERVER 7.0/2000/2005版本以上版本都支持
 
 #### 主要包含以下几步：
 
-#### 1.1 使用aspnet_regsql命令行或SqlCacheDependencyAdmin来配置连接数据库
+#### 1.1 使用`aspnet_regsql`命令行或`SqlCacheDependencyAdmin`来配置连接数据库
 
-```sql
-ALTER DATABASE <DatabaseName> SET ENABLE_BROKER;  //启用 ServiceBroker，需要在数据库中执行，或者在数据库右键属性，选项中修改ENABLE BROKER为true
+```mssql
+ALTER DATABASE <DatabaseName> SET ENABLE_BROKER;  
+-- 启用 ServiceBroker，需要在数据库中执行，或者在数据库右键属性，选项中修改ENABLE BROKER为true
 
-//注意修改时，需要关闭所有和此数据库关联的窗口，否则修改不成功。
+-- 注意修改时，需要关闭所有和此数据库关联的窗口，否则修改不成功。
 
-报如下错误：                      
+-- 报如下错误：                      
 Alter failed for Database 'pu'.  (Microsoft.SqlServer.Smo)         
 An exception occurred while executing a Transact-SQL statement or batch. (Microsoft.SqlServer.ConnectionInfo)             
 Database state cannot be changed while other users are using the database 'pu'
 ALTER DATABASE statement failed. (Microsoft SQL Server, Error: 5070)
 ```
 ```sql
-aspnet_regsql -S <server> -U sa -P sa -d <database> -ed     启动数据库的数据缓存依赖功能
+aspnet_regsql -S <server> -U sa -P sa -d <database> -ed     --启动数据库的数据缓存依赖功能
 
-aspnet_regsql -S <server> -U sa -P sa -d <database> -t <table> -et     启动数据表的数据缓存依赖功能
+aspnet_regsql -S <server> -U sa -P sa -d <database> -t <table> -et     --启动数据表的数据缓存依赖功能
 ```
 
 > 注意：系统默认不能识别aspnet_regsql，.net 4.0中aspnet_regsql的默认路径为
