@@ -41,6 +41,10 @@ WINEPREFIX=~/.deepinwine/Deepin-WeChat deepin-wine regedit msyh_config.reg
 #4.reboot
 ```
 
+解决输入框看不到字体：
+
+https://blog.csdn.net/Ivansyi/article/details/105616383?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromBaidu-1.control&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromBaidu-1.control
+
 QQ 乱码
 
 安装中文字体

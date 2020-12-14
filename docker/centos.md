@@ -94,6 +94,7 @@ CMD /bin/bash
 ### 使用国内 yum 源
 
 ```shell
+yum install -y wget
 cd /etc/yum.repos.d/ # 进入路径
 # 备份
 mkdir centos.back

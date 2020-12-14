@@ -17,6 +17,8 @@ docker rm -f $(docker ps -q)
 
 docker image rm -f $(docker images --filter "since=nginx" -q)
 
+docker cp mynginx:/var/log/nginx f:\docker\var\log\nginx
+
 # veth-pair 一对的虚拟设备接口，都是成对出现，一段连着协议，一段彼此相连
 
 # 查看网络信息
