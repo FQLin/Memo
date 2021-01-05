@@ -49,5 +49,11 @@ https://downloads.openwrt.org/releases/19.07.4/targets/ramips/mt7620/
 重刷 Openwrt：https://www.right.com.cn/forum/thread-4042144-1-1.html
 
 
-
 http://openwrt.lan/cgi-bin/luci/admin/network/wireless
+uvpn
+fanqinglin1990@hotmail.com
+FanuVPN0.
+
+https://blog.chaos.run/dreams/debian-shadowsocks-libev-client/index.html
+
+虚拟机密码：123456
