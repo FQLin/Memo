@@ -56,3 +56,4 @@ sudo apt install fonts-wqy-microhei fonts-wqy-zenhei
 安装wineHQ
 
 https://wiki.winehq.org/Ubuntu_zhcn
+
