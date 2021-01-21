@@ -24,6 +24,8 @@ mongod --dbpath=/var/lib/mongo --logpath=/var/log/mongodb/mongodb.log --logappen
 
 [文档地址](https://docs.mongodb.com/manual/installation/)
 
+[中文文档](https://mongodb.net.cn/)
+
 #### Docker mongodb
 
 ```bash
@@ -34,7 +36,7 @@ sudo docker exec -it mongodb /bin/bash
 ```
 
 ```sh
-show databases
+
 
 
 
