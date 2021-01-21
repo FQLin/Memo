@@ -1,0 +1,163 @@
+# primary,secondary,arbiter
+# docker-compose -f shardCluster-docker-compose.yaml up -d
+# docker-compose -f shardCluster-docker-compose.yaml down
+
+version: "3.8"
+services:
+  shardChunk01Primary:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "shardChunk01Primary"
+    command: --logappend --replSet replicationSetChunk01 --oplogSize 100 --directoryperdb --shardsvr
+    ports:
+      - "27217:27018"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.22.0.2
+        aliases:
+          - "mongodbShardChunk01Primary"
+  shardChunk01Secondary01:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "shardChunk01Secondary01"
+    command: --logappend --replSet replicationSetChunk01 --oplogSize 100 --directoryperdb --shardsvr
+    ports:
+      - "27218:27018"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.22.0.3
+        aliases:
+          - "mongodbShardChunk01Secondary01"
+  shardChunk01Secondary02:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "shardChunk01Secondary02"
+    command: --logappend --replSet replicationSetChunk01 --oplogSize 100 --directoryperdb --shardsvr
+    ports:
+      - "27219:27018"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.22.0.4
+        aliases:
+          - "mongodbShardChunk01Secondary02"
+  shardChunk01arbiter:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "shardChunk01Arbiter"
+    command: --logappend --replSet replicationSetChunk01 --oplogSize 100 --directoryperdb --shardsvr
+    ports:
+      - "27220:27018"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.22.0.5
+        aliases:
+          - "mongodbShardChunk01Arbiter"
+  shardChunk02Primary:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "shardChunk02Primary"
+    command: --logappend --replSet replicationSetChunk02 --oplogSize 100 --directoryperdb --shardsvr
+    ports:
+      - "27221:27018"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.22.0.6
+        aliases:
+          - "mongodbShardChunk02Primary"
+  shardChunk02Secondary01:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "shardChunk02Secondary01"
+    command: --logappend --replSet replicationSetChunk02 --oplogSize 100 --directoryperdb --shardsvr
+    ports:
+      - "27222:27018"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.22.0.7
+        aliases:
+          - "mongodbShardChunk02Secondary01"
+  shardChunk02Secondary02:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "shardChunk02Secondary02"
+    command: --logappend --replSet replicationSetChunk02 --oplogSize 100 --directoryperdb --shardsvr
+    ports:
+      - "27223:27018"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.22.0.8
+        aliases:
+          - "mongodbShardChunk02Secondary02"
+  shardChunk02arbiter:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "shardChunk02Arbiter"
+    command: --logappend --replSet replicationSetChunk02 --oplogSize 100 --directoryperdb --shardsvr
+    ports:
+      - "27224:27018"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.22.0.9
+        aliases:
+          - "mongodbShardChunk02Arbiter"
+  shardConfigPrimary:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "shardConfigPrimary"
+    command: --logappend --replSet replicationSetConfig --oplogSize 100 --directoryperdb --configsvr
+    ports:
+      - "27225:27019"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.22.0.10
+        aliases:
+          - "mongodbShardConfigPrimary"
+  shardConfigSecondary01:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "shardConfigSecondary01"
+    command: --logappend --replSet replicationSetConfig --oplogSize 100 --directoryperdb --configsvr
+    ports:
+      - "27226:27019"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.22.0.11
+        aliases:
+          - "mongodbShardConfigSecondary01"
+  shardConfigSecondary02:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "shardConfigSecondary02"
+    command: --logappend --replSet replicationSetConfig --oplogSize 100 --directoryperdb --configsvr
+    ports:
+      - "27227:27019"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.22.0.12
+        aliases:
+          - "mongodbShardConfigSecondary02"
+  shardRouter:
+    image: mongos:latest
+    restart: unless-stopped
+    container_name: "shardRouter"
+    command: mongos --logappend --configdb replicationSetConfig/172.22.0.10:27019,172.22.0.11:27019,172.22.0.12:27019
+    ports:
+      - "27228:27017"
+    depends_on:
+      - shardConfigPrimary
+      - shardConfigSecondary01
+      - shardConfigSecondary02
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.22.0.13
+        aliases:
+          - "mongodbshardRouter"
+networks:
+  cluster_mongodb:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.22.0.0/16"
+          gateway: "172.22.0.1"
+    name: "cluster_mongodb"

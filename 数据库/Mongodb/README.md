@@ -26,6 +26,10 @@ mongod --dbpath=/var/lib/mongo --logpath=/var/log/mongodb/mongodb.log --logappen
 
 [中文文档](https://mongodb.net.cn/)
 
+[文档](https://docs.mongoing.com/)
+
+
+
 #### Docker mongodb
 
 ```bash
