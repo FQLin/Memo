@@ -1,5 +1,6 @@
 # primary,secondary,arbiter
 # docker-compose -f replicationSet-docker-compose.yaml up -d
+# docker-compose -f replicationSet-docker-compose.yaml down
 
 version: "3.8"
 services:

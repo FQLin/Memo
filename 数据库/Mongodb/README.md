@@ -4,30 +4,31 @@
 #  copy file
 docker cp .\mongodb-linux-x86_64-ubuntu2004-4.4.3.tgz ubuntu:/opt/
 # 备份源
-mv sources.list sources.list.backup
+# mv sources.list sources.list.backup
 # 更新源
 docker cp .\sources.list ubuntu:/etc/apt/
 apt update
-apt upgrade
+apt upgrade -y
+apt-get -y install libcurl4 openssl liblzma5
 # 解压
 tar -zxvf mongodb-linux-x86_64-ubuntu2004-4.4.3.tgz
 # 安装
-mv mongodb-linux-x86_64-ubuntu2004-4.4.3 /usr/local/mongodb
-mkdir -p /usr/local/mongodb/data /usr/local/mongodb/logs
+copy mongodb-linux-x86_64-ubuntu2004-4.4.3/bin/* /usr/local/bin
+mkdir -p /var/lib/mongo /var/log/mongodb
 # 启动
-/usr/local/mongodb/bin/mongod --dbpath=/usr/local/mongodb/data --logpath=/usr/local/mongodb/logs/mongodb.log --logappend --port=27017 --fork
-# 进入 mongodb
-/usr/local/mongodb/bin/mongo
-
+mongod --dbpath=/var/lib/mongo --logpath=/var/log/mongodb/mongodb.log --logappend --port=27017 --directoryperdb --fork
 
 ```
 
-https://docs.mongodb.com/manual/installation/
+[mongod 配置参数](https://docs.mongodb.com/manual/reference/program/mongod/)
+
+[文档地址](https://docs.mongodb.com/manual/installation/)
+
+#### Docker mongodb
 
 ```bash
+
 sudo docker run --name mongodb -d mongo #:4.4.3-bionic
-
-
 
 sudo docker exec -it mongodb /bin/bash
 ```

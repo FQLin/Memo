@@ -1,0 +1,16 @@
+# docker build -f .\Dockerfile -t ubuntu:mongodb-0.1 .
+# docker run --name um -it ubuntu:mongodb-0.1
+# docker exec -it um /bin/bash
+FROM ubuntu:latest
+ADD mongodb-linux-x86_64-ubuntu2004-4.4.3.tgz /opt/
+WORKDIR /opt/mongodb-linux-x86_64-ubuntu2004-4.4.3
+RUN mv bin/* /usr/local/bin
+RUN mkdir -p /var/lib/mongo /var/log/mongodb
+COPY sources.list /etc/apt/
+WORKDIR /
+RUN apt update
+RUN apt upgrade -y
+RUN apt-get install libcurl4 openssl liblzma5
+
+EXPOSE 27017
+CMD mongod --dbpath=/var/lib/mongo --logpath=/var/log/mongodb/mongodb.log --logappend --port=27017 --directoryperdb
