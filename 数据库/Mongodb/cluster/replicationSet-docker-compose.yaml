@@ -1,0 +1,62 @@
+# primary,secondary,arbiter
+# docker-compose -f replicationSet-docker-compose.yaml up -d
+
+version: "3.8"
+services:
+  primary:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "primary"
+    command: --logappend --replSet replicationSet --oplogSize 100 --directoryperdb
+    ports:
+      - "27117:27017"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.21.0.2
+        aliases:
+          - "mongodbPrimary"
+  secondary01:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "secondary01"
+    command: --logappend --replSet replicationSet --oplogSize 100 --directoryperdb
+    ports:
+      - "27118:27017"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.21.0.3
+        aliases:
+          - "mongodbSecondary01"
+  secondary02:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "secondary02"
+    command: --logappend --replSet replicationSet --oplogSize 100 --directoryperdb
+    ports:
+      - "27119:27017"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.21.0.4
+        aliases:
+          - "mongodbSecondary02"
+  arbiter:
+    image: mongo:latest
+    restart: unless-stopped
+    container_name: "arbiter"
+    command: --logappend --replSet replicationSet --oplogSize 100 --directoryperdb
+    ports:
+      - "27120:27017"
+    networks:
+      cluster_mongodb:
+        ipv4_address: 172.21.0.5
+        aliases:
+          - "mongodbArbiter"
+networks:
+  cluster_mongodb:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.21.0.0/16"
+          gateway: "172.21.0.1"
+    name: "cluster_mongodb"

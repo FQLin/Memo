@@ -1,19 +1,38 @@
-``` BASH
+```BASH
+# Ubuntu安装Mongodb
+# 下载link：https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-4.4.3.tgz
+#  copy file
+docker cp .\mongodb-linux-x86_64-ubuntu2004-4.4.3.tgz ubuntu:/opt/
+# 备份源
+mv sources.list sources.list.backup
+# 更新源
+docker cp .\sources.list ubuntu:/etc/apt/
+apt update
+apt upgrade
+# 解压
+tar -zxvf mongodb-linux-x86_64-ubuntu2004-4.4.3.tgz
+# 安装
+mv mongodb-linux-x86_64-ubuntu2004-4.4.3 /usr/local/mongodb
+mkdir -p /usr/local/mongodb/data /usr/local/mongodb/logs
+# 启动
+/usr/local/mongodb/bin/mongod --dbpath=/usr/local/mongodb/data --logpath=/usr/local/mongodb/logs/mongodb.log --logappend --port=27017 --fork
 # 进入 mongodb
 /usr/local/mongodb/bin/mongo
+
+
 ```
 
 https://docs.mongodb.com/manual/installation/
 
-``` bash
-sudo docker run --name mongodb -d mongo
+```bash
+sudo docker run --name mongodb -d mongo #:4.4.3-bionic
 
 
 
 sudo docker exec -it mongodb /bin/bash
 ```
 
-``` sh
+```sh
 show databases
 
 
@@ -35,35 +54,27 @@ db.[collection name].find()
 db.[collection name].update()
 ```
 
-``` javascript
-for(let i=1;i<=10;i++){
-
-     db.c3.insert({uname:`fan_${i}`,age:i});
-
+```javascript
+for (let i = 1; i <= 10; i++) {
+  db.c3.insert({ uname: `fan_${i}`, age: i });
 }
 ```
 
-
-
 use test3
 
-``` javascript
-for(let i=1;i<=10000;i++){
+```javascript
+for (let i = 1; i <= 10000; i++) {
+  let uname = [];
 
-     let uname=[];
+  let age;
 
-     let age
+  for (let j = 0; j < 4; j++) {
+    age = Math.ceil(Math.random() * 25);
 
-     for(let j=0;j<4;j++){
+    uname.push(String.fromCharCode(65 + age));
+  }
 
-         age = Math.ceil(Math.random() * 25);
-
-         uname.push(String.fromCharCode(65+age));
-
-     }
-
-     db.c1.insert({uname:uname.join(''),age:age});
-
+  db.c1.insert({ uname: uname.join(""), age: age });
 }
 ```
 
@@ -88,4 +99,3 @@ db.createUser({
 
 mongo IP:PORT/admin -u admin -p password
 ```
-
