@@ -53,10 +53,10 @@ rs.initiate({
 mongos
 
 db.runCommand({
-    "addShard":"replicationSetChunk01/172.22.0.2:27017,172.22.0.3:27017,172.22.0.4:27017,172.22.0.5:27017"
+    "addShard":"replicationSetChunk01/172.22.0.2:27018,172.22.0.3:27018,172.22.0.4:27018,172.22.0.5:27018"
     });
 db.runCommand({
-    "addShard":"replicationSetChunk02/172.22.0.6:27017,172.22.0.7:27017,172.22.0.8:27017,172.22.0.9:27017"
+    "addShard":"replicationSetChunk02/172.22.0.6:27018,172.22.0.7:27018,172.22.0.8:27018,172.22.0.9:27018"
     });
 
 show tables
@@ -72,7 +72,7 @@ use test
 db.createCollection("users")
 show tables
 db.users.ensureIndex({"name":1})
-
+# 开启分片key
 use admin
 db.runCommand({"shardcollection":"test.users","key":{"name":"hashed"}})
 

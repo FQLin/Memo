@@ -1,5 +1,6 @@
 # primary,secondary,arbiter
 # docker-compose -f shardCluster-docker-compose.yaml up -d
+# docker-compose -f shardCluster-docker-compose.yaml stop
 # docker-compose -f shardCluster-docker-compose.yaml down
 
 version: "3.8"
@@ -140,7 +141,7 @@ services:
     image: mongos:latest
     restart: unless-stopped
     container_name: "shardRouter"
-    command: mongos --logappend --configdb replicationSetConfig/172.22.0.10:27019,172.22.0.11:27019,172.22.0.12:27019
+    command: mongos --logappend --configdb replicationSetConfig/172.22.0.10:27019,172.22.0.11:27019,172.22.0.12:27019 --bind_ip localhost,172.22.0.13
     ports:
       - "27228:27017"
     depends_on:
