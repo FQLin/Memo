@@ -20,3 +20,8 @@ show databases
 # create
 use newDB
 db.dropDatabase()
+db.test.insert("field":"value")
+db.createCollection("collectionName",{"capped#容量":false,"size":"20000kb","max#集合个数":"100","autoindexid":true})
+show tables
+show collections
+db.newCollection.insert({"field":"value"})
