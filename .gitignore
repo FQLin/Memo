@@ -4,3 +4,5 @@
 
 /.vs
 mongodb-linux-*.tgz
+elasticsearch-*.deb
+elasticsearch-*.deb.sha512
