@@ -30,6 +30,8 @@ mongod --dbpath=/var/lib/mongo --logpath=/var/log/mongodb/mongodb.log --logappen
 
 [MongoDB C#/.NET Driver](https://docs.mongodb.com/drivers/csharp)
 
+[shell method](https://docs.mongodb.com/manual/reference/method/)
+
 
 
 #### Docker mongodb
