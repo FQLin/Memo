@@ -22,7 +22,7 @@ http://www.cnblogs.com/Security-Darren/p/4106328.html
 
 ``` powershell
 # 启动 ssh-agent
-eval ssh-agent -s
+eval `ssh-agent -s`
 
 # 添加 key
 ssh-add ~/.ssh/id_rsa
