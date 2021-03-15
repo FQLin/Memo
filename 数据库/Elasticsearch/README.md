@@ -30,3 +30,19 @@ dpkg -i elasticsearch-7.10.2-amd64.deb
 bin/elasticsearch-plugin install ....zip
 ```
 
+[安装文档](https://www.elastic.co/guide/en/elasticsearch/reference/7.10/targz.html#install-linux)
+
+``` bash
+# install elasticsearch
+docker run --name elasticsearch-dev -p 19202:9200 -p 19102:9100 -it ubuntu
+# 退出容器 Ctrl+P+Q
+docker cp .\elasticsearch-7.10.2-linux-x86_64.tar.gz elasticsearch-dev:/opt/
+docker cp .\elasticsearch-head-master.zip elasticsearch-dev:/opt/
+docker cp elasticsearch-dev:/opt/elasticsearch-7.10.2/config/ .\config\
+docker cp elasticsearch-dev:/opt/elasticsearch-7.10.2/bin/elasticsearch .\bin\
+docker exec -it elasticsearch-dev /bin/bash
+groupadd elasticsearch
+useradd elasticsearch -g elasticsearch -p elasticsearch
+chown -R elasticsearch:elasticsearch /opt/elasticsearch-7.10.2
+```
+

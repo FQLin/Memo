@@ -1,0 +1,16 @@
+FROM ubuntu
+ADD ./elasticsearch-7.10.2-linux-x86_64.tar.gz /home/elasticsearch
+RUN groupadd elasticsearch
+RUN useradd elasticsearch -g elasticsearch -p elasticsearch
+RUN chown -R elasticsearch:elasticsearch /home/elasticsearch
+WORKDIR /home/elasticsearch/elasticsearch-7.10.2
+
+EXPOSE 9200
+EXPOSE 9300
+
+ENTRYPOINT [ "/bin/bash" ]
+# ENTRYPOINT [ "su", "-","elasticsearch", "-c", "./bin/elasticsearch" ]
+
+# docker build -f .\Dockerfile -t ubuntu:elasticsearch .
+# docker run --name ubuntu-elasticsearch -p 19200:9200 -p 19300:9300 ubuntu:elasticsearch
+# docker exec -it ubuntu-elasticsearch /bin/bash

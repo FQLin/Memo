@@ -6,3 +6,7 @@
 mongodb-linux-*.tgz
 elasticsearch-*.deb
 elasticsearch-*.deb.sha512
+elasticsearch-7.10.2-linux-x86_*.tar.gz
+elasticsearch-head-master.zip
+数据库/Elasticsearch/bin
+数据库/Elasticsearch/config

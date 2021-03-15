@@ -1,14 +1,13 @@
-Windows Containers的Settings是没有FILE SHARING(shared drivers)的
+Windows Containers 的 Settings 是没有 FILE SHARING(shared drivers)的
 
-[CLI文档](https://docs.docker.com/engine/reference/commandline/docker/)
+[CLI 文档](https://docs.docker.com/engine/reference/commandline/docker/)
+[端口问题](https://github.com/docker/for-win/issues/3171)
 
-> 重启docker
-systemctl restart docker
+> 重启 docker
+> systemctl restart docker
 
-> bash进入容器内部
-docker exec -it mysql1 bash 
-
-
+> bash 进入容器内部
+> docker exec -it mysql1 bash
 
 ```bash
 docker volume ls
@@ -67,4 +66,3 @@ PING tomcat-net-02 (192.168.0.3) 56(84) bytes of data.
 # 打通 bridge 到 netlearn 一个容器，两个IP
 PS C:\Users\fanqi> docker network connect netlearn tomcat01
 ```
-
