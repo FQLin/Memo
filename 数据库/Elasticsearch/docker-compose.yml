@@ -4,40 +4,40 @@
 
 version: "3.8"
 services:
-  elasticsearch:
-    image: elasticsearch:latest
-    restart: unless-stopped
-    container_name: elasticsearch
-    environment:
-      - "discovery.type=single-node"
-    ports:
-      - "9200:9200"
-    networks:
-      elasticsearch_net:
-        ipv4_address: 172.14.0.2
-        aliases:
-          - "elasticsearchNet"
-  kibana:
-    image: kibana:latest
-    restart: unless-stopped
-    container_name: kibana
-    ports:
-      - "5601:5601"
-    environment:
-      - elasticsearch_url=http://172.14.0.2:9200
-    depends_on:
-      - elasticsearch
-    networks:
-      elasticsearch_net:
-        ipv4_address: 172.14.0.3
-        aliases:
-          - "kibanaNet"
+    elasticsearch:
+        image: elasticsearch:7.11.2
+        restart: unless-stopped
+        container_name: elasticsearch
+        environment:
+            - "discovery.type=single-node"
+        ports:
+            - "9200:9200"
+        networks:
+            elasticsearch_net:
+                ipv4_address: 172.14.0.2
+                aliases:
+                    - "elasticsearchNet"
+    kibana:
+        image: kibana:7.11.2
+        restart: unless-stopped
+        container_name: kibana
+        ports:
+            - "5601:5601"
+        environment:
+            - elasticsearch_url=http://172.14.0.2:9200
+        depends_on:
+            - elasticsearch
+        networks:
+            elasticsearch_net:
+                ipv4_address: 172.14.0.3
+                aliases:
+                    - "kibanaNet"
 networks:
-  elasticsearch_net:
-    driver: "bridge"
-    ipam:
-      driver: default
-      config:
-        - subnet: "172.14.0.0/16"
-          gateway: "172.14.0.1"
-    name: "elasticsearch_net"
+    elasticsearch_net:
+        driver: "bridge"
+        ipam:
+            driver: default
+            config:
+                - subnet: "172.14.0.0/16"
+                  gateway: "172.14.0.1"
+        name: "elasticsearch_net"
