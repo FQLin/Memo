@@ -57,3 +57,6 @@ FanuVPN0.
 https://blog.chaos.run/dreams/debian-shadowsocks-libev-client/index.html
 
 虚拟机密码：123456
+
+trojan:https://tlanyan.me/trojan-tutorial/
+x2ray:https://tlanyan.me/v2ray-tutorial/

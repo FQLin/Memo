@@ -9,5 +9,6 @@ elasticsearch-*.deb.sha512
 elasticsearch-7.10.2-linux-x86_*.tar.gz
 elasticsearch-7.11.2-linux-x86_*.tar.gz
 elasticsearch-head-master.zip
+harbor-offline-installer-v2.2.1.tgz
 数据库/Elasticsearch/bin
 数据库/Elasticsearch/config
