@@ -58,3 +58,5 @@ sudo chmod 777 /home/fanqinglin/i
 UUID=8EA2DAF93E7C61D0    /home/fanqinglin/i    ntfs    defaults    0    2
 
 https://extensions.gnome.org/
+
+sources.list 在 /etc/apt/

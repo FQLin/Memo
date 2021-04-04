@@ -12,3 +12,7 @@ elasticsearch-head-master.zip
 harbor-offline-installer-v2.2.1.tgz
 数据库/Elasticsearch/bin
 数据库/Elasticsearch/config
+数据库/Elasticsearch/ik
+数据库/Elasticsearch/elasticsearch-7.12.0-linux-x86_64.tar.gz
+数据库/Elasticsearch/elasticsearch-analysis-ik-7.12.0.zip
+数据库/Elasticsearch/kibana-7.12.0-linux-x86_64.tar.gz

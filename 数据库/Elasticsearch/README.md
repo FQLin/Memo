@@ -6,6 +6,8 @@
 
 [elasticsearch head](https://github.com/mobz/elasticsearch-head) 是可视化管理工具
 
+[elasticsearch安装文档](https://www.elastic.co/guide/en/elasticsearch/reference/7.10/targz.html#install-linux)
+
 ```bash
 apt-get install wget
 
@@ -26,7 +28,7 @@ dpkg -i elasticsearch-7.10.2-amd64.deb
 bin/elasticsearch-plugin install ....zip
 ```
 
-[安装文档](https://www.elastic.co/guide/en/elasticsearch/reference/7.10/targz.html#install-linux)
+
 
 ```bash
 # docker 安装 elasticsearch 有效步骤
@@ -63,6 +65,14 @@ docker cp .\elasticsearch-head-master.zip elasticsearch-dev:/opt/
 
 docker cp elasticsearch-dev:/opt/elasticsearch-7.10.2/bin/elasticsearch .\bin\
 docker exec -it esiu /bin/bash
+# compose 容器安装IK分词
+docker exec -it elasticsearch /bin/bash
+# 修改config
+docker cp elasticsearch:/usr/share/elasticsearch/plugins/ik/plugin-descriptor.properties .\config\
+docker cp .\elasticsearch-analysis-ik-7.12.0.zip elasticsearch:/usr/share/elasticsearch/plugins/
+docker cp .\ik\ elasticsearch:/usr/share/elasticsearch/plugins/ik/
+docker cp .\config\plugin-descriptor.properties elasticsearch:/usr/share/elasticsearch/plugins/ik/
+
 # sysctl 生效
 /sbin/sysctl -p
 sysctl -w vm.max_map_count=262144
@@ -72,3 +82,34 @@ sysctl -w vm.max_map_count=262144
 # To run Elasticsearch as a daemon, specify -d on the command line
 ./bin/elasticsearch -d -p pid
 ```
+
+> GET
+>
+> /index ：query index
+>
+> /index/type/doc_id
+>
+> POST
+>
+> /index/type/_search ：query doc
+>
+> /index/type/doc_id/_update ： alter doc
+>
+> PUT
+>
+> /index  ：create index 
+>
+> /index/type/_mappings：create index
+>
+> DELETE
+>
+> /index
+>
+> /index/type/doc_id
+
+
+
+[net-api](https://www.elastic.co/guide/en/elasticsearch/client/net-api/current/introduction.html)
+
+[聚合查询](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-aggregations.html)
+

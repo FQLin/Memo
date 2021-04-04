@@ -5,7 +5,7 @@
 version: "3.8"
 services:
     elasticsearch:
-        image: elasticsearch:7.11.2
+        image: elasticsearch:7.12.0
         restart: unless-stopped
         container_name: elasticsearch
         environment:
@@ -18,7 +18,7 @@ services:
                 aliases:
                     - "elasticsearchNet"
     kibana:
-        image: kibana:7.11.2
+        image: kibana:7.12.0
         restart: unless-stopped
         container_name: kibana
         ports:
