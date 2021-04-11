@@ -6,7 +6,7 @@
 
 [elasticsearch head](https://github.com/mobz/elasticsearch-head) 是可视化管理工具
 
-[elasticsearch安装文档](https://www.elastic.co/guide/en/elasticsearch/reference/7.10/targz.html#install-linux)
+[elasticsearch 安装文档](https://www.elastic.co/guide/en/elasticsearch/reference/7.10/targz.html#install-linux)
 
 ```bash
 apt-get install wget
@@ -27,8 +27,6 @@ dpkg -i elasticsearch-7.10.2-amd64.deb
 ```bash
 bin/elasticsearch-plugin install ....zip
 ```
-
-
 
 ```bash
 # docker 安装 elasticsearch 有效步骤
@@ -83,33 +81,271 @@ sysctl -w vm.max_map_count=262144
 ./bin/elasticsearch -d -p pid
 ```
 
-> GET
->
-> /index ：query index
->
-> /index/type/doc_id
->
-> POST
->
-> /index/type/_search ：query doc
->
-> /index/type/doc_id/_update ： alter doc
->
-> PUT
->
-> /index  ：create index 
->
-> /index/type/_mappings：create index
->
-> DELETE
->
-> /index
->
-> /index/type/doc_id
-
-
-
 [net-api](https://www.elastic.co/guide/en/elasticsearch/client/net-api/current/introduction.html)
 
 [聚合查询](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-aggregations.html)
 
+search_type=dfs_query_then_fetch,协调节点统一计算分数，不推荐使用
+
+dis_max 实现 best fields 策略，使用 tie_breaker 参数优化，multi_match 简化
+
+multi_match 还有 most_fields、corss_fields
+
+match_phrase 短语搜索，条件不分词
+
+```json
+// 重计分
+{
+    "query":{},
+    "rescore":{
+        "window_size":50, //每个分片
+        "query":{
+            "rescore_query":{}
+        }
+    },
+    "from":0,
+    "size":20
+}
+
+// ngram
+{
+    "settings":{
+        "analysis":{
+            "filter":{
+                "my_ngram_filter":{
+                    "type":"edge_ngram",
+                    "min_gram":1,
+                    "max_gram":30
+                }
+            },
+            "analyzer":{
+                "my_analyzer":{
+                    "type":"custom",
+                    "tokenizer":"standard",
+                    "filter":[
+                        "lowercase",
+                        "my_ngram_filter"
+                    ]
+                }
+            }
+        }
+    },
+    "mapping":{
+        "test_t":{
+            "properties":{
+                "f":{
+                    "type":"text",
+                    "analyzer":"my_analyzer",
+                    "fields":{
+                        "keyword":{
+                            "type":"keyword"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//聚合
+{
+    "size":0,
+    "aggs":{
+        "roup_by_color":{
+            "terms":{
+                "field":"color",
+                "order":{
+                    "avg_by_price":"asc"
+                }
+            }
+        },
+        "aggs":{
+            "avg_by_price":{
+                "avg":{
+                    "field":"price"
+                }
+            }
+        }
+    }
+}
+```
+
+一对多建模 [nested](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-nested-query.html#query-dsl-nested-query)
+
+```json
+{
+    "mappings": {
+        "users": {
+            "properties": {
+                "login_name": {
+                    "type": "keyword"
+                },
+                "adress": {
+                    "type": "nested",
+                    "properties": {
+                        "province": {
+                            "type": "keyword"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+父子关系
+
+```json
+// mapping 关系
+{
+    "mappings":{
+        "ecommerce":{
+            "properties":{
+                "category_name":{
+                    type:"text",
+                    "analyzer":"ik_max_word",
+                    "fields":{
+                        "keyword":{
+                            "type":"keyword"
+                        }
+                    }
+                },
+                "ecommerce_join_field":{
+                    "type":"json",
+                    "relations":{
+                        "catetory":"product"
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 搜索 parent_type,parent_id,has_child,ecommerce_join_field#category
+{
+    "query":{
+        "parent_id":{
+            "type":"product",
+            "id":1
+        }
+    }
+}
+
+{
+    "query":{
+        "has_child":{
+            "type":"product",
+            "query":{
+                "range":{
+                    "price":{
+                        "gte":5000,
+                        "lte":10000
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+祖孙三代关系模型
+
+```json
+{
+    "mappings": {
+        "structure": {
+            "properties": {
+                "country_name": {
+                    "type": "keyword"
+                },
+                "department_name": {
+                    "type": "keyword"
+                },
+                "employee_name": {
+                    "type": "keyword"
+                },
+                "company_join_field": {
+                    "type": "join",
+                    "relations": {
+                        "country": "department",
+                        "department": "employee"
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+term vector
+
+```json
+{
+    "settings":{
+        "analysis":{
+            "analyzer":{
+                "fulltext_analyzer":{
+                    "type":"custom",
+                    "tokenizer":"whitespace",
+                    "filter":[
+                        "lowercase",
+                        "type_as_payload"
+                    ]
+                }
+            }
+        }
+    },
+    "mappings":{
+        my_type:{
+            properties:{
+                "text":{
+                    "type":"text",
+                    "term_vector":"with_positions_offsets_payloads",
+                    "store":true,
+                    "analyzer":"fulltext_analyzer"
+                }
+            }
+        }
+    }
+}
+
+// GET /my_index/my_type/1/_termvectors
+{
+    "fields":["text"],
+    "offsets":true,
+    "payloads":true,
+    "positions":true,
+    "term_statistics":true,
+    "field_statistics":true
+}
+
+// 多个document进行探查
+// GET /index/type/_mtermvectors
+{
+    "docs":[
+        {
+            "_id":1,
+            "fields":[
+                "text"
+            ],
+            "term_statistics":true
+        },{
+            "_id":"2"
+        }
+    ]
+}
+
+// template
+// GET /cars/_search/template
+{
+    "source":"{\"query\":{\"match\": {{#toJson}}parameter{{/toJson}} }",
+    "params":{
+        "parameter":{
+            "remark":"大众"
+        }
+    }
+}
+
+// default value {{end}}{{^end}}default value{{/end}}
+```
