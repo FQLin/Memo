@@ -10,9 +10,9 @@ typora-root-url: pictures
 
 #一、文本处理工具
 
-##1. ==grep工具==
+##1. <font color=#FF0000>grep工具</font>
 
-> grep是**==行==**过滤工具；用于根据关键字进行行过滤
+> grep是**<font color=#FF0000>行</font>**过滤工具；用于根据关键字进行行过滤
 
 ### 语法和选项
 
@@ -66,7 +66,7 @@ source ~/.bashrc
 
 **举例说明：**
 
-==说明：不要直接使用/etc/passwd文件，将其拷贝到/tmp下做实验！==
+<font color=#FF0000>说明：不要直接使用/etc/passwd文件，将其拷贝到/tmp下做实验！</font>
 
 ```powershell
 # grep -i root passwd						忽略大小写匹配包含root的行
@@ -86,9 +86,9 @@ source ~/.bashrc
 # grep -C 5 mail passwd 					匹配包含mail关键字及其前后5行
 ```
 
-##2. ==cut工具==
+##2. <font color=#FF0000>cut工具</font>
 
-> cut是**==列==**截取工具，用于列的截取
+> cut是**<font color=#FF0000>列</font>**截取工具，用于列的截取
 
 ### 语法和选项
 
@@ -174,7 +174,7 @@ cut -d: -f2 /etc/inittab |tail -1
 
 ##4.uniq工具
 
-> uniq用于去除**==连续==**的**==重复==**行
+> uniq用于去除**<font color=#FF0000>连续</font>**的**<font color=#FF0000>重复</font>**行
 
 ~~~powershell
 常见选项：
@@ -207,7 +207,7 @@ cut -d: -f2 /etc/inittab |tail -1
 
 > diff工具用于逐行比较文件的不同
 
-注意：diff描述两个文件不同的方式是告诉我们==怎样改变第一个==文件之后==与第二个文件匹配==。
+注意：diff描述两个文件不同的方式是告诉我们<font color=#FF0000>怎样改变第一个</font>文件之后<font color=#FF0000>与第二个文件匹配</font>。
 
 ### 语法和选项
 
@@ -231,7 +231,7 @@ diff [选项] 文件1 文件2
 
 **举例说明：**
 
-- 比较两个==普通文件==异同，文件准备：
+- 比较两个<font color=#FF0000>普通文件</font>异同，文件准备：
 
 ```powershell
 [root@MissHou ~]# cat file1
@@ -317,7 +317,7 @@ diff目的：file1如何改变才能和file2匹配
 +world
 ```
 
-- 比较两个==目录不同==
+- 比较两个<font color=#FF0000>目录不同</font>
 
 ```powershell
 默认情况下也会比较两个目录里相同文件的内容
@@ -365,7 +365,7 @@ patching file file1
 
 ## 8. tr工具
 
->  tr用于字符转换，替换和删除；主要用于==删除文件中控制字符==或进行==字符转换==
+>  tr用于字符转换，替换和删除；主要用于<font color=#FF0000>删除文件中控制字符</font>或进行<font color=#FF0000>字符转换</font>
 
 ### 语法和选项
 
@@ -396,9 +396,9 @@ patching file file1
 
 | 字符串             | 含义                 | 备注                                                         |
 | ------------------ | -------------------- | ------------------------------------------------------------------------ |
-| ==a-z==或[:lower:] | 匹配所有小写字母     | 所有大小写和数字[a-zA-Z0-9]|
-| ==A-Z==或[:upper:] | 匹配所有大写字母     |                                                              |
-| ==0-9==或[:digit:] | 匹配所有数字         |                                                              |
+| <font color=#FF0000>a-z</font>或[:lower:] | 匹配所有小写字母     | 所有大小写和数字[a-zA-Z0-9]|
+| <font color=#FF0000>A-Z</font>或[:upper:] | 匹配所有大写字母     |                                                              |
+| <font color=#FF0000>0-9</font>或[:digit:] | 匹配所有数字         |                                                              |
 | [:alnum:]          | 匹配所有字母和数字   |                                                              |
 | [:alpha:]          | 匹配所有字母         |                                                              |
 | [:blank:]          | 所有水平空白         |                                                              |
@@ -484,7 +484,7 @@ hello world 888
 
 ##1、命令和文件自动补全
 
-Tab只能补全==命令和文件== （RHEL6/Centos6）
+Tab只能补全<font color=#FF0000>命令和文件</font> （RHEL6/Centos6）
 
 ##2、常见的快捷键
 
@@ -500,7 +500,7 @@ Tab只能补全==命令和文件== （RHEL6/Centos6）
 ^r	 			搜索历史命令
 ~~~
 
-##3 、==常用的通配符（重点）==
+##3 、<font color=#FF0000>常用的通配符（重点）</font>
 
 ~~~powershell
 *:	匹配0或多个任意字符
@@ -515,7 +515,7 @@ Tab只能补全==命令和文件== （RHEL6/Centos6）
 # touch file{1..5}
 ~~~
 
-##4、==bash中的引号（重点）==
+##4、<font color=#FF0000>bash中的引号（重点）</font>
 
 - 双引号""   :会把引号的内容当成整体来看待，允许通过$符号引用其他变量值
 - 单引号''     :会把引号的内容当成整体来看待，禁止引用其他变量值，shell中特殊符号都被视为普通字符
