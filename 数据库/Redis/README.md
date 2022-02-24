@@ -8,7 +8,8 @@
 
 ```bash
 docker run --name redis01 --rm -p 6666:6379 -d redis
-docker exec -it redis01 bash
+docker exec -it redis bash
+redis-cli -a 1qaz2wsx -p 6379
 docker cp f:/redis/config/redis01.conf redis01:/data/redis.conf
 ```
 
