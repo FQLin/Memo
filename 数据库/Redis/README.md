@@ -11,9 +11,8 @@ docker run --name redis01 --rm -p 6666:6379 -d redis
 docker exec -it redis bash
 redis-cli -a 1qaz2wsx -p 6379
 docker cp f:/redis/config/redis01.conf redis01:/data/redis.conf
+
 ```
-
-
 
 # [`Redis`](https://redis.io/) [中文网](http://www.redis.cn/)
 
@@ -25,6 +24,7 @@ redis-server rconfig/redis.conf
 # 关闭
 127.0.0.1:6379> shutdown
 ```
+
  ![image-20200919175116757](./images/image-20200919175116757.png)
 
 ![image-20200919175659448](./images/image-20200919175659448.png)
@@ -410,7 +410,7 @@ cmd添加的slave断了之后不会重新连接到主机
 
 #### [哨兵](http://www.redis.cn/topics/sentinel.html)模式`sentinel /ˈsentɪnl/`
 
-``` bash
+```bash
 # 哨兵配置文件 sentinel.conf 可以在安装包中找到
 # sentinel monitor 被监控的名称 host port 最后一个quorum的意思是有几台 Sentinel发现有问题，就会发生故障转移
 sentinel monitor redis_sentinel 172.21.0.2 6379 1
@@ -422,7 +422,7 @@ redis-sentinel sentinel.conf
 
 ##### `sentinel.conf`详解
 
-```  bash
+```bash
 # 哨兵默认使用端口
 port 26379
 # sentinel monitor <master-name> <ip> <redis-port> <quorum>
@@ -434,7 +434,7 @@ sentinel down-after-milliseconds mymaster 30000
 
 #### 集群
 
-``` bash
+```bash
 # 1.Redis 集群是无中心的
 # 2.Redis 集群有一个ping-pang机制
 # 3.投票机制，Redis集群节点数量必须是2n + 1
@@ -460,13 +460,13 @@ redis-cli --cluster create nodeip:port [,nodeip:port [,nodeip:port...]] --cluste
 ##### `Redis`删除策略
 
 > 1.定期删除，100ms查看3个key。
->
+> 
 > 2.惰性删除
 
 > 缓存穿透：查不到。解决： 布隆过滤器，缓存空对象
->
+> 
 > 缓存击穿：过期段内大量请求。解决：永不过期，加分布式锁
->
+> 
 > 缓存雪崩：缓存集体失效、redis宕机。
->
+> 
 > 缓存倾斜：热点数据都在一台机器上。解决：扩展主从，redis之前设置cache

@@ -1,7 +1,5 @@
 [alpine 官网](https://www.alpinelinux.org/)
 
-[Package management - Alpine Linux](https://wiki.alpinelinux.org/wiki/Package_management)
-
 ```shell
 # 使用 apk 软件包管理
 # 查看文档

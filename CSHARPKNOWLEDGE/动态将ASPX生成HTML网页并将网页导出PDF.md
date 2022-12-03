@@ -4,7 +4,7 @@
 
 3.pos.aspx网页中有这样的一个方法，此方法用来生成html页面
 
-``` C#
+```C#
 protected override void Render(HtmlTextWriter writer)
 {
     string htmlname = "POSDemo";
@@ -114,23 +114,21 @@ public class MyPDFGenerator
         }
         catch 
         {
-        	return null;
+            return null;
         }
     }
 }
 ```
 
-
-
 5.调用方法
 
-``` C#
+```C#
 byte[] bytes = MyPDFGenerator.Create(Server.MapPath("../Upload/POSDemo.html"));
 ```
 
 6.最后导出pdf
 
- ``` C#
+```C#
 System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
 response.Clear();
 response.AddHeader("Content-Type", "binary/octet-stream");
@@ -140,7 +138,6 @@ response.Flush();
 response.BinaryWrite(bytes);
 response.Flush();
 response.End();
- ```
-
+```
 
 http://www.cnblogs.com/linxianfeng/p/4710241.html

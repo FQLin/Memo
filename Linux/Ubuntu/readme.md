@@ -40,7 +40,7 @@ https://www.ubuntukylin.com/applications/24-cn.html
 
 https://www.bilibili.com/video/BV1m54y1k776?from=search&seid=1161699472201353418
 
-``` bash
+```bash
 # 查看可以挂载的硬盘，需要先点一下
 df -kh
 # 解绑

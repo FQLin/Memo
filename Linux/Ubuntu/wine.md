@@ -8,8 +8,6 @@ git clone https://github.com/wszqkzqk/deepin-wine-ubuntu.git
 
 https://github.com/wszqkzqk/deepin-wine-ubuntu/issues/136#issuecomment-650871812
 
-
-
 下载微软雅黑字体,`msyh.ttc`
 
 ```
@@ -56,4 +54,3 @@ sudo apt install fonts-wqy-microhei fonts-wqy-zenhei
 安装wineHQ
 
 https://wiki.winehq.org/Ubuntu_zhcn
-
