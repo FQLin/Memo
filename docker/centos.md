@@ -1,4 +1,4 @@
-```cmd
+``` shell
 docker pull centos
 
 docker run --name centos01 --rm -p 10022:22 -itd centos /bin/bash
