@@ -66,12 +66,16 @@ PING tomcat-net-02 (192.168.0.3) 56(84) bytes of data.
 # 打通 bridge 到 netlearn 一个容器，两个IP
 PS C:\Users\fanqi> docker network connect netlearn tomcat01
 ```
+* * *
 ## Docker 容器中运行Docker
+- [如何在docker容器中运行docker命令](https://blog.csdn.net/weixin_36938307/article/details/105092191)
+
 在Docker中实现Docker的三种方法
 
 > 1.通过挂载docker.sock（DooD方法）运行docker<br/>
-> 2.dind 方法<br/>
-> 3.Docker in Docker (DinD) / 使用Nestybox sysbox Docker运行时
+> 2.Docker in Docker (DinD) 方法<br/>
+> 3.使用Nestybox sysbox Docker运行时
+
 ### `DooD`
 
 把`host`的`docker.socks`映射到容器内，这样容器内就可以直接使用`host`的`docker`服务。容器内看到的镜像和容器都是`host`上的。
@@ -80,8 +84,21 @@ PS C:\Users\fanqi> docker network connect netlearn tomcat01
 ``` yml
 volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
+  - "/usr/bin/docker:/usr/bin/docker"
 ```
 配置同样适用于`windows`，因为在 `Docker for Mac` 和 `Windows for Linux`会在虚拟机中创建Linux容器，`/var/run/docker.sock`使用的是虚拟机的卷。
+`/usr/bin/docker`是同样的原因
+
+``` bash
+# 看到的会是host主机的容器信息
+docker ps
+```
+
+### `DinD`
+1. 在容器内部安装docker
+2. 使用官方提供的[`docker`](https://hub.docker.com/_/docker)镜像
+
+* * *
 ## 修改已经存在的容器的配置
 ### 添加挂载
 #### Windows
@@ -130,3 +147,5 @@ explorer.exe .
 4. 重启整个Docker
 > 需要重启Docker，而不是修改的容器。
 如果只是重启容器上面的配置会被还原
+
+#### Linux/Debian

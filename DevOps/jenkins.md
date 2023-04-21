@@ -73,5 +73,46 @@ JENKINS_HOME/updates/default.json
 ``` shell
 sed -i 's#updates.jenkins.io/download/plugins#mirrors.tuna.tsinghua.edu.cn/jenkins/plugins#g' default.json && sed -i 's#www.google.com#www.baidu.com#g' default.json
 ```
+> 安装 `CloudBees Docker Build and Publish` 插件可以启用 blue ocean
+## `Building nodejs app
+1. 准备 git
+``` shell
+# Jenkins 所在的服务器安装 git  
+apt-get install git
+# 查看安装的版本
+git --version
+```
+2. Jenkins 准备 nodejs 环境
+![Jenkins 准备 nodejs 环境](./images/jenkins/nodejs-jenkins-00.png)
+3. 创建 nodejs job
+> ![create job](./images/jenkins/nodejs-jenkins-01.png)
+>> 1.  github 仓库地址
+![create job](./images/jenkins/nodejs-jenkins-02.png)
+>> 2. 启用nodejs环境
+![create job](./images/jenkins/nodejs-jenkins-03.png)
+``` shell
+# 进入 workspace 查看Jenkins运行结果
+/var/lib/jenkins/workspace/'nodejs example app'
+```
 ## `Building nodejs app with Docker`
-- 安装 `CloudBees Docker Build and Publish` 插件
+## `Jenkins Job DSL`
+[dsl script](https://github.com/wardviaene/jenkins-course/tree/master/job-dsl)
+1. 安装 Job DSL 插件
+2. 创建新的DSL Job
+![dsl job 源地址](./images/jenkins/jenkins-dsl-01.png)
+![dsl job 脚本地址](./images/jenkins/jenkins-dsl-02.png)
+出现脚本执行权限问题,需要在 `In-process Script Approval` 中允许脚本执行。
+> 只要出现 `script not yet approved for use`错误的时候才会出现 `In-process Script Approval` 菜单。
+
+``` shell
+Processing DSL script job-dsl/nodejs.groovy
+
+ERROR: script not yet approved for use
+
+Finished: FAILURE
+```
+执行完成后会创建一个Job，Job 名称和配置都是来自SDL 脚本的执行
+## `Jenkins Pipeline from GitHub`
+1. github 添加 ssh（公钥）
+2. Jenkins 添加全局凭证
+![Jenkins 添加全局凭证](./images/jenkins/Jenkins-credentials-01.png)
