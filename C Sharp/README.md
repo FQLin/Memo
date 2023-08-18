@@ -28,3 +28,8 @@ https://blog.csdn.net/devillyd/article/details/5896819
 
 缓存失效的回调不是立刻执行的，而是在进行缓存操作的时候才对缓存进行检查，如果失效的话执行失效回调。
 可以在`MemoryCacheOptions`中配置缓存失效扫描间隔，但会有性能损耗
+
+### package 漏洞
+``` powershell
+dotnet list package --vulnerable --include-transitive
+```

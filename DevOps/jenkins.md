@@ -1,4 +1,5 @@
 # `Docker` 使用 `Debian` 安装 `Jenkins`
+[User Documentation - Pipeline](https://www.jenkins.io/doc/book/pipeline/)
 ``` shell
 # 启动 Debian
  docker run --name jenkins -it -p 8080:8080 debian:latest /bin/bash
