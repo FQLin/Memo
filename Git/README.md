@@ -35,5 +35,9 @@ ssh -T git@github.com
 ```
 
 [git 回退](https://blog.csdn.net/zhezhebie/article/details/79420752)
-
+[git 代理](https://www.cnblogs.com/cscshi/p/15705045.html)
+.ssh/config
+Host git.host.com[sample]
+  User git
+  ProxyCommand connect -H account:password@proxy地址:端口号 %h %p
 
